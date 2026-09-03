@@ -1,0 +1,19 @@
+{
+  "_comment": "All non-ASCII UI text lives here, never inside a .ps1. Windows PowerShell 5.1 mis-parses a .ps1 that contains non-ASCII without a UTF-8 BOM (silent no-match, or TerminatorExpectedAtEndOfString). This file is read with an explicit UTF-8 decoder, so it has no such hazard. It also makes the whole skill retargetable to another MAA UI language by editing one file.",
+
+  "toolboxTab": "小工具",
+  "toolboxTabFallback": "MaaWpfGui.ViewModels.UI.ToolboxViewModel",
+  "operDevelopTab": "干员培养",
+
+  "skillCheckboxes": ["技能 1", "技能 2", "技能 3"],
+  "holdUntilCompleteCheckbox": "保持接管直到本阶段专精完成",
+
+  "buttons": {
+    "preflight": "预检或继续",
+    "start": "确认开始",
+    "stop": "停止"
+  },
+
+  "warningDialogTitle": "警告",
+  "materialRecheckMarker": "材料复核"
+}
