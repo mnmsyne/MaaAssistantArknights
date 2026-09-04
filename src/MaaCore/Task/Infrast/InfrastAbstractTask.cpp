@@ -13,7 +13,6 @@
 #include "Vision/Infrast/InfrastFacilityImageAnalyzer.h"
 #include "Vision/Infrast/InfrastOperImageAnalyzer.h"
 #include "Vision/Matcher.h"
-#include "Vision/OCRer.h"
 #include "Vision/RegionOCRer.h"
 #include <ranges>
 
@@ -742,16 +741,33 @@ bool asst::InfrastAbstractTask::click_confirm_button()
 
 void asst::InfrastAbstractTask::swipe_of_operlist()
 {
-    ProcessTask(*this, { "InfrastOperListSlowlySwipeToTheRight" }).run();
+    swipe_operlist_right_one_page(*this);
+}
+
+void asst::swipe_operlist_right_one_page(AbstractTask& host)
+{
+    ProcessTask(host, { "InfrastOperListSlowlySwipeToTheRight" }).run();
 }
 
 void asst::InfrastAbstractTask::swipe_to_the_left_of_operlist(int loop_times)
 {
+    if (loop_times < 0) {
+        loop_times = operlist_swipe_times();
+    }
+    swipe_operlist_to_the_left(*this, loop_times);
+}
+
+void asst::swipe_operlist_to_the_left(AbstractTask& host, int loop_times)
+{
     // 通过切换职业栏来实现回正
-    bool ret = ProcessTask(*this, { "BattleQuickFormationExpandRole" }).set_retry_times(3).run();
+    bool ret = ProcessTask(host, { "BattleQuickFormationExpandRole" }).set_retry_times(3).run();
+    if (!ret) {
+        // 职业栏可能已被上个流程留在展开态（开关显示为"收起"）：只识别不点击，命中即视为已展开
+        ret = ProcessTask(host, { "InfrastCloseQuickFormationExpandRoleVerify" }).set_retry_times(3).run();
+    }
     if (ret) {
         ProcessTask(
-            *this,
+            host,
             { "BattleQuickFormationRole-Pioneer",
               "BattleQuickFormationRole-Warrior",
               "BattleQuickFormationRole-Tank",
@@ -761,18 +777,15 @@ void asst::InfrastAbstractTask::swipe_to_the_left_of_operlist(int loop_times)
               "BattleQuickFormationRole-Special",
               "BattleQuickFormationRole-Support" })
             .run();
-        ProcessTask(*this, { "BattleQuickFormationRole-All", "BattleQuickFormationRole-All-OCR" }).run();
+        ProcessTask(host, { "BattleQuickFormationRole-All", "BattleQuickFormationRole-All-OCR" }).run();
         // 基建默认收起
-        close_quick_formation_expand_role();
+        ProcessTask(host, { "InfrastCloseQuickFormationExpandRole", "Stop" }).run();
     }
     else {
-        if (loop_times < 0) {
-            loop_times = operlist_swipe_times();
-        }
         for (int i = 0; i < loop_times; ++i) {
-            ProcessTask(*this, { "InfrastOperListSwipeToTheLeft" }).run();
+            ProcessTask(host, { "InfrastOperListSwipeToTheLeft" }).run();
         }
-        ProcessTask(*this, { "SleepAfterOperListQuickSwipe" }).run();
+        ProcessTask(host, { "SleepAfterOperListQuickSwipe" }).run();
     }
 }
 

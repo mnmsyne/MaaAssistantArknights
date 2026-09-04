@@ -1,5 +1,7 @@
 #pragma once
 #include <set>
+#include <string_view>
+#include <vector>
 
 #include "Common/AsstInfrastDef.h"
 #include "Common/AsstTypes.h"
@@ -50,6 +52,7 @@ protected:
     // 往右滑一点
     void swipe_to_right_of_main_ui();
     void swipe_of_operlist();
+
     bool is_use_custom_opers();
     infrast::CustomRoomConfig& current_room_config();
     // 将定义的干员编组解释为具体干员，每次基建换班任务的第一次调用时缓存可用干员列表
@@ -93,4 +96,9 @@ protected:
     std::shared_ptr<infrast::TaskData> m_task_data;
     std::unordered_set<std::string> m_pending_operator_ids;
 };
+
+// 基建干员列表通用滑动：设施选人流程与训练室协助面板（TrainingAssistantPanel）共用。
+// loop_times 须为正数（负数的"用设施默认次数"语义由调用方先解析，见 operlist_swipe_times）。
+void swipe_operlist_to_the_left(AbstractTask& host, int loop_times);
+void swipe_operlist_right_one_page(AbstractTask& host);
 } // namespace asst

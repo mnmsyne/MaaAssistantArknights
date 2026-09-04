@@ -1,9 +1,6 @@
 #pragma once
 #include "InfrastProductionTask.h"
 
-// #include "Config/Miscellaneous/BattleDataConfig.h"
-// TODO: 根据角色职业增加换班功能
-
 namespace asst
 {
 class InfrastTrainingTask final : public InfrastProductionTask
@@ -30,14 +27,14 @@ private:
     bool training_completed();
     std::optional<std::string> time_left_analyze(const cv::Mat& image);
     bool continue_train(int index);
+    // Best-effort assistant optimization after continuing mastery training.
+    bool optimize_assistant_for_next_level();
     static int skill_index_from_rect(const Rect& r);
 
     int m_level;
     std::string m_operator_name;
     std::string m_skill_name;
     cv::Mat m_skill_img;
-    // asst::battle::Role m_operator_role;
-
     bool m_continue_training = false;
 };
 }
