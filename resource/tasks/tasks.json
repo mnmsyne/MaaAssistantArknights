@@ -3544,6 +3544,11 @@
         "roi": [1163, 0, 117, 133],
         "next": ["Stop"]
     },
+    "InfrastCloseQuickFormationExpandRoleVerify": {
+        "baseTask": "InfrastCloseQuickFormationExpandRole",
+        "template": "BattleQuickFormationCollapseRole.png",
+        "action": "DoNothing"
+    },
     "InfrastClueVacancy1": {
         "template": "ClueVacancy1.png",
         "templThreshold": 0.75,
@@ -3941,10 +3946,30 @@
         "action": "ClickSelf",
         "roi": [1000, 550, 280, 150],
         "postDelay": 1000,
-        "next": ["InfrastTrainingLocked"]
+        "next": ["InfrastTrainingProcessing", "InfrastTrainingAssistantFlag", "InfrastTrainingLocked"]
     },
     "InfrastTrainingLocked": {
         "roi": [890, 10, 200, 200]
+    },
+    "InfrastTrainingAssistantFlag": {
+        "algorithm": "OcrDetect",
+        "text": ["协助者"],
+        "roi": [70, 340, 280, 80]
+    },
+    "InfrastTrainingOpenAssistant": {
+        "algorithm": "JustReturn",
+        "action": "ClickRect",
+        "specificRect": [185, 470, 60, 100],
+        "postDelay": 800
+    },
+    "InfrastTrainingAssistantSortArea": {
+        "algorithm": "OcrDetect",
+        "text": ["效率"],
+        "roi": [538, 6, 650, 64]
+    },
+    "InfrastTrainingAssistantSkillArea": {
+        "template": "empty.png",
+        "roi": [0, 100, 410, 610]
     },
     "InfrastOperListTabSkillUnClicked": {
         "action": "ClickSelf",
