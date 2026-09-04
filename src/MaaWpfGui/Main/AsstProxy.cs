@@ -2417,6 +2417,39 @@ public class AsstProxy
                     break;
                 }
 
+            case "InfrastTrainingAssistant":
+                {
+                    var result = subTaskDetails?["result"]?.ToString();
+                    var rawAssistant = subTaskDetails?["assistant"]?.ToString();
+                    var assistant = string.IsNullOrEmpty(rawAssistant)
+                        ? null
+                        : DataHelper.GetLocalizedCharacterName(rawAssistant) ?? rawAssistant;
+                    if (result == "switched")
+                    {
+                        Instances.TaskQueueViewModel.AddLog(
+                            string.Format(
+                                LocalizationHelper.GetString("TrainingAssistantSwitched"),
+                                assistant ?? "UnKnown"),
+                            UiLogColor.Info);
+                    }
+                    else if (assistant != null)
+                    {
+                        Instances.TaskQueueViewModel.AddLog(
+                            string.Format(
+                                LocalizationHelper.GetString("TrainingAssistantUnchanged"),
+                                assistant),
+                            UiLogColor.Info);
+                    }
+                    else
+                    {
+                        Instances.TaskQueueViewModel.AddLog(
+                            LocalizationHelper.GetString("TrainingAssistantUnchangedUnknown"),
+                            UiLogColor.Info);
+                    }
+
+                    break;
+                }
+
             /* 生息演算 */
             case "ReclamationReport":
                 Instances.TaskQueueViewModel.AddLog(

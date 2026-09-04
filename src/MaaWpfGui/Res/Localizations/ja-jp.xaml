@@ -194,6 +194,9 @@
     <system:String x:Key="TrainingCompleted">訓練が完了しました</system:String>
     <system:String x:Key="TrainingLevel">スキルランク</system:String>
     <system:String x:Key="TrainingTimeLeft">残り時間</system:String>
+    <system:String x:Key="TrainingAssistantSwitched">補助オペレーターを{0}に変更しました</system:String>
+    <system:String x:Key="TrainingAssistantUnchanged">現在の訓練室補助オペレーターは{0}です</system:String>
+    <system:String x:Key="TrainingAssistantUnchangedUnknown">訓練室の補助オペレーターは変更されませんでした</system:String>
     <system:String x:Key="InfrastMode">インフラモード</system:String>
     <system:String x:Key="InfrastModeNormal">通常モード</system:String>
     <system:String x:Key="InfrastModeRotation">一括シフト休暇</system:String>

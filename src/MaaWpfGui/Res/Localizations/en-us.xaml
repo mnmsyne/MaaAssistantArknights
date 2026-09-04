@@ -194,6 +194,9 @@
     <system:String x:Key="TrainingCompleted">Training completed</system:String>
     <system:String x:Key="TrainingLevel">Skill Rank</system:String>
     <system:String x:Key="TrainingTimeLeft">Remaining Time</system:String>
+    <system:String x:Key="TrainingAssistantSwitched">Assistant switched to {0}</system:String>
+    <system:String x:Key="TrainingAssistantUnchanged">Current training room assistant is {0}</system:String>
+    <system:String x:Key="TrainingAssistantUnchangedUnknown">Training room assistant was not changed</system:String>
     <system:String x:Key="InfrastMode">Base Mode</system:String>
     <system:String x:Key="InfrastModeNormal">Normal Mode</system:String>
     <system:String x:Key="InfrastModeRotation">One-click Rotation Mode</system:String>

@@ -194,6 +194,9 @@
     <system:String x:Key="TrainingCompleted">訓練完成</system:String>
     <system:String x:Key="TrainingLevel">專精等級</system:String>
     <system:String x:Key="TrainingTimeLeft">剩餘時間</system:String>
+    <system:String x:Key="TrainingAssistantSwitched">更換協助幹員為 {0}</system:String>
+    <system:String x:Key="TrainingAssistantUnchanged">目前協助幹員為 {0}</system:String>
+    <system:String x:Key="TrainingAssistantUnchangedUnknown">未更換訓練室協助幹員</system:String>
     <system:String x:Key="InfrastMode">基建模式</system:String>
     <system:String x:Key="InfrastModeNormal">一般模式</system:String>
     <system:String x:Key="InfrastModeRotation">隊列輪換</system:String>
