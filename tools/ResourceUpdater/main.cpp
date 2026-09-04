@@ -3,10 +3,15 @@
 #include <chrono>
 #include <filesystem>
 #include <fstream>
+#include <map>
+#include <regex>
+#include <set>
 #include <string_view>
 #include <thread>
+#include <tuple>
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 
 #include <meojson/json.hpp>
 #include <opencv2/opencv.hpp>
@@ -166,6 +171,7 @@ bool run_parallel_tasks(
 bool update_items_data(const fs::path& input_dir, const fs::path& output_dir, bool with_imgs = true);
 bool cvt_single_item_template(const fs::path& input, const fs::path& output);
 bool update_infrast_data(const fs::path& input_dir, const fs::path& output_dir);
+bool update_training_data(const fs::path& input_file, const fs::path& output_file);
 bool update_stages_data(const fs::path& input_dir, const fs::path& output_dir);
 bool update_roguelike_recruit(const fs::path& input_dir, const fs::path& output_dir, const fs::path& solution_dir);
 bool update_levels_json(const fs::path& input_file, const fs::path& output_dir);
@@ -180,6 +186,14 @@ bool update_version_info(const fs::path& input_dir, const fs::path& output_dir);
 
 int main([[maybe_unused]] int argc, char** argv)
 {
+    if (argc == 4 && std::string_view(argv[1]) == "--training-only") {
+        const bool succeeded = update_training_data(fs::path(argv[2]), fs::path(argv[3]));
+        if (!succeeded) {
+            std::cerr << "update_training_data failed" << '\n';
+        }
+        return succeeded ? 0 : 1;
+    }
+
 #if defined(_WIN32)
     SetConsoleOutputCP(CP_UTF8);
 #endif
@@ -680,6 +694,199 @@ void remove_xml(std::string& text)
     text.erase(next_iter, text.end());
 }
 
+namespace
+{
+struct TrainingBuffEffect
+{
+    std::array<int, 3> speed_bonus {};
+    std::array<double, 3> mood_cost_extra {};
+    std::set<std::string> targets;
+    bool dynamic = false;
+};
+
+struct GeneratedTrainingSkill
+{
+    int group = 0;
+    int phase = 0;
+    int level = 0;
+    std::string room;
+    std::string skill;
+    std::optional<TrainingBuffEffect> effect;
+};
+
+bool is_control_training_buff(const json::value& value)
+{
+    const auto room_type = value.find<std::string>("roomType");
+    const auto skill_icon = value.find<std::string>("skillIcon");
+    return room_type && *room_type == "CONTROL" && skill_icon && skill_icon->starts_with("bskill_ctrl_train_");
+}
+
+std::optional<TrainingBuffEffect> parse_training_buff(const json::value& value)
+{
+    const auto room_type = value.find<std::string>("roomType");
+    const auto targets = value.find<json::array>("targets");
+    const auto description = value.find<std::string>("description");
+    if (!room_type || *room_type != "TRAINING" || !targets || !description) {
+        return std::nullopt;
+    }
+
+    TrainingBuffEffect effect;
+    for (const auto& target : *targets) {
+        if (target.is_string()) {
+            effect.targets.emplace(target.as_string());
+        }
+    }
+    if (effect.targets.empty()) {
+        return std::nullopt;
+    }
+
+    const int base_efficiency = value.get("efficiency", 0);
+    effect.speed_bonus.fill(base_efficiency);
+
+    std::string text = *description;
+    remove_xml(text);
+    static const std::regex StageExtraPattern(
+        R"(如果本次训练专精技能至([123])级，则训练速度额外\+(\d+)%)");
+    static const std::regex StageOnlyPattern(
+        R"(如果本次训练专精技能至([123])级，专精技能训练速度\+(\d+)%)");
+    static const std::regex MoodCostPattern(R"(心情每小时消耗\+(\d+))");
+    static const std::regex StagePattern(R"(专精技能至([123])级)");
+
+    std::smatch match;
+    bool deterministic_stage_speed = false;
+    if (std::regex_search(text, match, StageExtraPattern)) {
+        const int stage = std::stoi(match[1].str());
+        effect.speed_bonus.at(static_cast<size_t>(stage - 1)) += std::stoi(match[2].str());
+        deterministic_stage_speed = true;
+    }
+    else if (base_efficiency == 0 && std::regex_search(text, match, StageOnlyPattern)) {
+        const int stage = std::stoi(match[1].str());
+        effect.speed_bonus.at(static_cast<size_t>(stage - 1)) = std::stoi(match[2].str());
+        deterministic_stage_speed = true;
+    }
+
+    std::smatch mood_match;
+    if (std::regex_search(text, mood_match, MoodCostPattern)) {
+        const double extra = std::stod(mood_match[1].str());
+        std::smatch stage_match;
+        if (std::regex_search(text, stage_match, StagePattern)) {
+            const int stage = std::stoi(stage_match[1].str());
+            effect.mood_cost_extra.at(static_cast<size_t>(stage - 1)) = extra;
+        }
+        else {
+            effect.mood_cost_extra.fill(extra);
+        }
+    }
+
+    effect.dynamic = base_efficiency == 0 && !deterministic_stage_speed &&
+                     text.find("训练速度") != std::string::npos;
+    return effect;
+}
+} // namespace
+
+bool update_training_data(const fs::path& input_file, const fs::path& output_file)
+{
+    auto input_opt = json::open(input_file);
+    auto output_opt = json::open(output_file);
+    if (!input_opt || !output_opt) {
+        std::cerr << "training resource input parse error" << '\n';
+        return false;
+    }
+
+    auto buffs_opt = input_opt->find<json::object>("buffs");
+    auto chars_opt = input_opt->find<json::object>("chars");
+    if (!buffs_opt || !chars_opt) {
+        std::cerr << "building_data.json is missing buffs or chars" << '\n';
+        return false;
+    }
+
+    std::map<std::string, std::vector<GeneratedTrainingSkill>> generated;
+
+    for (const auto& [operator_id, char_value] : *chars_opt) {
+        const auto groups_opt = char_value.find<json::array>("buffChar");
+        if (!groups_opt) {
+            continue;
+        }
+
+        int group_index = 0;
+        for (const auto& group_value : *groups_opt) {
+            const auto buff_data_opt = group_value.find<json::array>("buffData");
+            if (!buff_data_opt) {
+                ++group_index;
+                continue;
+            }
+            for (const auto& unlock_value : *buff_data_opt) {
+                const auto buff_id = unlock_value.find<std::string>("buffId");
+                const auto cond = unlock_value.find<json::object>("cond");
+                if (!buff_id || !cond) {
+                    continue;
+                }
+                const auto buff_value = buffs_opt->find(*buff_id);
+                if (!buff_value) {
+                    continue;
+                }
+                auto effect = parse_training_buff(*buff_value);
+                if (!effect && !is_control_training_buff(*buff_value)) {
+                    continue;
+                }
+                std::string skill;
+                if (!effect) {
+                    skill = buff_value->at("skillIcon").as_string();
+                }
+                generated[operator_id].emplace_back(
+                    GeneratedTrainingSkill {
+                        .group = group_index,
+                        .phase = static_cast<int>(cond->at("phase").as_integer()),
+                        .level = static_cast<int>(cond->at("level").as_integer()),
+                        .room = effect ? "TRAINING" : "CONTROL",
+                        .skill = std::move(skill),
+                        .effect = std::move(effect),
+                    });
+            }
+            ++group_index;
+        }
+    }
+
+    json::value root = std::move(*output_opt);
+    root.as_object().erase("stage_assistants");
+    root.as_object().erase("dynamic_assistants");
+    root.as_object().erase("control_center_training_skills");
+    root["operators"] = json::object {};
+    for (auto& [operator_id, skills] : generated) {
+        std::ranges::sort(skills, [](const auto& lhs, const auto& rhs) {
+            return std::tie(lhs.group, lhs.phase, lhs.level, lhs.room, lhs.skill) <
+                   std::tie(rhs.group, rhs.phase, rhs.level, rhs.room, rhs.skill);
+        });
+        auto& output = root["operators"][operator_id].as_array();
+        for (const auto& skill : skills) {
+            json::object value {
+                { "group", skill.group },
+                { "phase", skill.phase },
+                { "level", skill.level },
+                { "room", skill.room },
+            };
+            if (skill.effect) {
+                value["targets"] = json::array(skill.effect->targets);
+                value["speed_bonus"] = json::array(skill.effect->speed_bonus);
+                if (std::ranges::any_of(skill.effect->mood_cost_extra, [](double value) { return value != 0.0; })) {
+                    value["mood_cost_extra"] = json::array(skill.effect->mood_cost_extra);
+                }
+                if (skill.effect->dynamic) {
+                    value["dynamic"] = true;
+                }
+            }
+            else {
+                value["skill"] = skill.skill;
+            }
+            output.emplace_back(std::move(value));
+        }
+    }
+
+    std::ofstream ofs(output_file, std::ios::out);
+    ofs << root.format();
+    return ofs.good();
+}
+
 bool update_infrast_data(const fs::path& input_dir, const fs::path& output_dir)
 {
     const auto input_file = input_dir / "building_data.json";
@@ -840,7 +1047,7 @@ bool update_infrast_data(const fs::path& input_dir, const fs::path& output_dir)
     ofs << root.format();
     ofs.close();
 
-    return true;
+    return update_training_data(input_file, output_dir / "training.json");
 }
 
 bool update_stages_data(const fs::path& input_dir, const fs::path& output_dir)

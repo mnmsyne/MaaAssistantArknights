@@ -1,0 +1,1332 @@
+{
+    "excluded_operators": {
+        "char_4195_radian": "integrated_strategies_special_operator",
+        "char_4230_mcnist": "integrated_strategies_special_operator",
+        "char_508_aguard": "integrated_strategies_special_operator",
+        "char_509_acast": "integrated_strategies_special_operator",
+        "char_510_amedic": "integrated_strategies_special_operator",
+        "char_511_asnipe": "integrated_strategies_special_operator",
+        "char_512_aprot": "integrated_strategies_special_operator",
+        "char_513_apionr": "integrated_strategies_special_operator",
+        "char_600_cpione": "integrated_strategies_special_operator",
+        "char_601_cguard": "integrated_strategies_special_operator",
+        "char_602_cdfend": "integrated_strategies_special_operator",
+        "char_603_csnipe": "integrated_strategies_special_operator",
+        "char_604_ccast": "integrated_strategies_special_operator",
+        "char_605_cmedic": "integrated_strategies_special_operator",
+        "char_606_csuppo": "integrated_strategies_special_operator",
+        "char_607_cspec": "integrated_strategies_special_operator",
+        "char_608_acpion": "integrated_strategies_special_operator",
+        "char_609_acguad": "integrated_strategies_special_operator",
+        "char_610_acfend": "integrated_strategies_special_operator",
+        "char_611_acnipe": "integrated_strategies_special_operator",
+        "char_612_accast": "integrated_strategies_special_operator",
+        "char_613_acmedc": "integrated_strategies_special_operator",
+        "char_614_acsupo": "integrated_strategies_special_operator",
+        "char_615_acspec": "integrated_strategies_special_operator",
+        "char_616_pithst": "integrated_strategies_special_operator",
+        "char_617_sharp2": "integrated_strategies_special_operator"
+    },
+    "halving_assistants": [
+        {
+            "operator_id": "char_4133_logos",
+            "role_bonus": 30,
+            "roles": ["CASTER", "SUPPORT"],
+            "trigger_bonus": 50
+        },
+        {
+            "operator_id": "char_4009_irene",
+            "role_bonus": 30,
+            "roles": ["WARRIOR", "SNIPER"],
+            "trigger_bonus": 50
+        }
+    ],
+    "halving_trigger_minutes": 300,
+    "mastery_base_minutes": [480, 960, 1440],
+    "operators": {
+        "char_1012_skadi2": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SUPPORT"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 95],
+                "targets": ["SUPPORT"]
+            },
+            {
+                "group": 1,
+                "level": 1,
+                "mood_cost_extra": [0.0, 0.0, 1.0],
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["SUPPORT"]
+            }
+        ],
+        "char_1013_chen2": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SNIPER"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [95, 30, 30],
+                "targets": ["SNIPER"]
+            },
+            {
+                "group": 1,
+                "level": 1,
+                "mood_cost_extra": [1.0, 0.0, 0.0],
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["SNIPER"]
+            }
+        ],
+        "char_1014_nearl2": [
+            {
+                "dynamic": true,
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            },
+            {
+                "dynamic": true,
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_1016_agoat2": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["MEDIC"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["MEDIC"]
+            }
+        ],
+        "char_1020_reed2": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["CASTER", "MEDIC"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [45, 45, 45],
+                "targets": ["CASTER", "MEDIC"]
+            }
+        ],
+        "char_1021_kroos2": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SNIPER"]
+            }
+        ],
+        "char_1023_ghost2": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SPECIAL"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 95],
+                "targets": ["SPECIAL"]
+            },
+            {
+                "group": 1,
+                "level": 1,
+                "mood_cost_extra": [0.0, 0.0, 1.0],
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["SPECIAL"]
+            }
+        ],
+        "char_1024_hbisc2": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 75, 30],
+                "targets": ["MEDIC"]
+            }
+        ],
+        "char_1026_gvial2": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 95],
+                "targets": ["WARRIOR"]
+            },
+            {
+                "group": 1,
+                "level": 1,
+                "mood_cost_extra": [0.0, 0.0, 1.0],
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_1028_texas2": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["PIONEER", "SPECIAL"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 80, 30],
+                "targets": ["PIONEER", "SPECIAL"]
+            }
+        ],
+        "char_1038_whitw2": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["CASTER", "WARRIOR"]
+            },
+            {
+                "dynamic": true,
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_1040_blaze2": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "CONTROL",
+                "skill": "bskill_ctrl_train_spd2"
+            }
+        ],
+        "char_1044_hsgma2": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "CONTROL",
+                "skill": "bskill_ctrl_train_spd3"
+            }
+        ],
+        "char_1045_svash2": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["PIONEER"]
+            },
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 80],
+                "targets": ["PIONEER"]
+            }
+        ],
+        "char_1049_catap2": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SNIPER", "WARRIOR"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "mood_cost_extra": [1.0, 1.0, 1.0],
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [50, 50, 50],
+                "targets": ["SNIPER", "WARRIOR"]
+            }
+        ],
+        "char_106_franka": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [50, 50, 50],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_113_cqbw": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SNIPER"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 95],
+                "targets": ["SNIPER"]
+            },
+            {
+                "group": 1,
+                "level": 1,
+                "mood_cost_extra": [0.0, 0.0, 1.0],
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["SNIPER"]
+            }
+        ],
+        "char_130_doberm": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 1,
+                "room": "TRAINING",
+                "speed_bonus": [25, 25, 25],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_136_hsguma": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["TANK"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [60, 60, 60],
+                "targets": ["TANK"]
+            }
+        ],
+        "char_137_brownb": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_157_dagda": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_164_nightm": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["CASTER"]
+            }
+        ],
+        "char_166_skfire": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["CASTER"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [50, 50, 50],
+                "targets": ["CASTER"]
+            }
+        ],
+        "char_171_bldsk": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["MEDIC"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [50, 50, 50],
+                "targets": ["MEDIC"]
+            }
+        ],
+        "char_174_slbell": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [50, 50, 50],
+                "targets": ["SUPPORT"]
+            }
+        ],
+        "char_187_ccheal": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 1,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["MEDIC"]
+            }
+        ],
+        "char_192_falco": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["PIONEER"]
+            }
+        ],
+        "char_194_leto": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_195_glassb": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SUPPORT"]
+            }
+        ],
+        "char_199_yak": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 1,
+                "room": "TRAINING",
+                "speed_bonus": [50, 50, 50],
+                "targets": ["TANK"]
+            }
+        ],
+        "char_2012_typhon": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SNIPER"]
+            }
+        ],
+        "char_2026_yu": [
+            {
+                "dynamic": true,
+                "group": 1,
+                "level": 1,
+                "mood_cost_extra": [1.0, 1.0, 1.0],
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_2027_wang": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 70],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_204_platnm": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SNIPER"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [50, 50, 50],
+                "targets": ["SNIPER"]
+            }
+        ],
+        "char_215_mantic": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SPECIAL"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [50, 50, 50],
+                "targets": ["SPECIAL"]
+            }
+        ],
+        "char_220_grani": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["PIONEER"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [50, 50, 50],
+                "targets": ["PIONEER"]
+            }
+        ],
+        "char_225_haak": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [60, 60, 60],
+                "targets": ["MEDIC"]
+            }
+        ],
+        "char_250_phatom": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SPECIAL"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [60, 60, 60],
+                "targets": ["SPECIAL"]
+            }
+        ],
+        "char_260_durnar": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["TANK"]
+            }
+        ],
+        "char_265_sophia": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            },
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [25, 25, 25],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_279_excu": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SNIPER"]
+            }
+        ],
+        "char_290_vigna": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 1,
+                "room": "TRAINING",
+                "speed_bonus": [50, 50, 50],
+                "targets": ["PIONEER"]
+            }
+        ],
+        "char_298_susuro": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["MEDIC"]
+            }
+        ],
+        "char_304_zebra": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["TANK"]
+            },
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 75, 30],
+                "targets": ["TANK"]
+            }
+        ],
+        "char_308_swire": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [25, 25, 25],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_333_sidero": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 75],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_340_shwaz": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [60, 60, 60],
+                "targets": ["SNIPER"]
+            }
+        ],
+        "char_341_sntlla": [
+            {
+                "dynamic": true,
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_344_beewax": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["CASTER"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [50, 50, 50],
+                "targets": ["CASTER"]
+            }
+        ],
+        "char_350_surtr": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [60, 60, 60],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_356_broca": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [50, 50, 50],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_358_lisa": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SUPPORT"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [60, 60, 60],
+                "targets": ["SUPPORT"]
+            }
+        ],
+        "char_362_saga": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["PIONEER"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [60, 60, 60],
+                "targets": ["PIONEER"]
+            }
+        ],
+        "char_388_mint": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["CASTER"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 75, 30],
+                "targets": ["CASTER"]
+            }
+        ],
+        "char_394_hadiya": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 75],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_4006_melnte": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SNIPER"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 75],
+                "targets": ["SNIPER"]
+            }
+        ],
+        "char_4009_irene": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SNIPER", "WARRIOR"]
+            },
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_4025_aprot2": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["TANK"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["TANK"]
+            }
+        ],
+        "char_4043_erato": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SNIPER"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 75, 30],
+                "targets": ["SNIPER"]
+            }
+        ],
+        "char_4082_qiubai": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_411_tomimi": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [75, 30, 30],
+                "targets": ["CASTER"]
+            }
+        ],
+        "char_4121_zuole": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [25, 25, 25],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            },
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_4123_ela": [
+            {
+                "dynamic": true,
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_4124_iana": [
+            {
+                "dynamic": true,
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_4125_rdoc": [
+            {
+                "dynamic": true,
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_4126_fuze": [
+            {
+                "dynamic": true,
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_4132_ascln": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "CONTROL",
+                "skill": "bskill_ctrl_train_spd1"
+            }
+        ],
+        "char_4133_logos": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["CASTER", "SUPPORT"]
+            },
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_4139_papyrs": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["MEDIC"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["MEDIC"]
+            }
+        ],
+        "char_4145_ulpia": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SUPPORT", "WARRIOR"]
+            },
+            {
+                "dynamic": true,
+                "group": 1,
+                "level": 1,
+                "mood_cost_extra": [1.0, 1.0, 1.0],
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_415_flint": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 75, 30],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_4165_ctrail": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [50, 50, 50],
+                "targets": ["SPECIAL"]
+            }
+        ],
+        "char_4187_graceb": [
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_4196_reckpr": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["MEDIC"]
+            },
+            {
+                "group": 1,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [25, 25, 25],
+                "targets": ["CASTER", "MEDIC", "PIONEER", "SNIPER", "SPECIAL", "SUPPORT", "TANK", "WARRIOR"]
+            }
+        ],
+        "char_4226_veen": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["CASTER", "WARRIOR"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [45, 45, 45],
+                "targets": ["CASTER", "WARRIOR"]
+            }
+        ],
+        "char_422_aurora": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["TANK"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [75, 30, 30],
+                "targets": ["TANK"]
+            }
+        ],
+        "char_4234_pedro": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SUPPORT"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SUPPORT"]
+            }
+        ],
+        "char_426_billro": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["CASTER"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [60, 60, 60],
+                "targets": ["CASTER"]
+            }
+        ],
+        "char_450_necras": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["CASTER"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 95],
+                "targets": ["CASTER"]
+            },
+            {
+                "group": 1,
+                "level": 1,
+                "mood_cost_extra": [0.0, 0.0, 1.0],
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [0, 0, 0],
+                "targets": ["CASTER"]
+            }
+        ],
+        "char_451_robin": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["SPECIAL"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [75, 30, 30],
+                "targets": ["SPECIAL"]
+            }
+        ],
+        "char_475_akafyu": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["WARRIOR"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [75, 30, 30],
+                "targets": ["WARRIOR"]
+            }
+        ],
+        "char_476_blkngt": [
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 0,
+                "room": "TRAINING",
+                "speed_bonus": [30, 30, 30],
+                "targets": ["PIONEER"]
+            },
+            {
+                "group": 0,
+                "level": 1,
+                "phase": 2,
+                "room": "TRAINING",
+                "speed_bonus": [75, 30, 30],
+                "targets": ["PIONEER"]
+            }
+        ]
+    }
+}
