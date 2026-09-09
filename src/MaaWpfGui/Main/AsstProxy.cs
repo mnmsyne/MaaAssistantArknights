@@ -2741,6 +2741,10 @@ public class AsstProxy
                         result) + recognizedText,
                     result is "completed" or "already_satisfied" ? UiLogColor.Success :
                     result == "skipped" ? UiLogColor.Warning : UiLogColor.Error);
+                ViewModels.UserControl.TaskQueue.AutoRaiseSettingsUserControlModel.Instance.OnTargetResult(
+                    (int)(details?["index"] ?? -1),
+                    details?["name"]?.ToString() ?? string.Empty,
+                    result is "completed" or "already_satisfied");
                 break;
 
             case "AutoRaiseSummary":
@@ -2752,6 +2756,7 @@ public class AsstProxy
                         details?["failed"] ?? 0,
                         details?["skipped"] ?? 0),
                     (int)(details?["failed"] ?? 0) == 0 ? UiLogColor.Success : UiLogColor.Warning);
+                ViewModels.UserControl.TaskQueue.AutoRaiseSettingsUserControlModel.Instance.OnSummary();
                 break;
         }
     }
