@@ -181,6 +181,11 @@ public enum AsstTaskType : byte
     OperBox,
 
     /// <summary>
+    /// 干员培养。
+    /// </summary>
+    OperDevelop,
+
+    /// <summary>
     /// 生息演算
     /// </summary>
     Reclamation,

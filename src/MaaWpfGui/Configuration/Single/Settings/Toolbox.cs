@@ -49,4 +49,14 @@ public partial class Toolbox : NotifyPropertyChangedWithValue
     public bool AutoSetTime { get; set; } = true;
 
     public bool ShowPotential { get; set; } = true;
+
+    public string OperDevelopOperatorId { get; set; } = string.Empty;
+
+    public int OperDevelopSkillIndex { get; set; } = 1;
+
+    public int OperDevelopMasteryRank { get; set; } = 3;
+
+    // Wire tokens: "halving" (prefer halving assistants on M1/M2) and "efficiency" (always the overall best).
+    // Tokens from older builds are normalized back to "halving" by OperDevelopViewModel on startup.
+    public string OperDevelopTrainingMode { get; set; } = "halving";
 }

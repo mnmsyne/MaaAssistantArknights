@@ -2000,6 +2000,10 @@ public class AsstProxy
             case "OperBox":
                 Instances.ToolboxViewModel.OperBoxParse((JObject?)subTaskDetails, updateSyncTime: true, taskId);
                 break;
+
+            case "OperDevelop":
+                Instances.ToolboxViewModel.OperDevelop.HandleOperDevelopCoreMessage(details);
+                break;
         }
 
         string what = details["what"]?.ToString() ?? string.Empty;
@@ -3092,6 +3096,9 @@ public class AsstProxy
 
         /// <summary>干员识别</summary>
         OperBox,
+
+        /// <summary>干员培养</summary>
+        OperDevelop,
 
         /// <summary>抽卡</summary>
         Gacha,

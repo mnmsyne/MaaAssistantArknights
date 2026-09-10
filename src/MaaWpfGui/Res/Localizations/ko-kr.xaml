@@ -1095,6 +1095,39 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="OperBoxExportYes">예</system:String>
     <system:String x:Key="OperBoxExportNo">아니오</system:String>
     <!--  !오퍼레이터 인식  -->
+    <!--  Operator Development  -->
+    <system:String x:Key="OperDevelop">Operator Development</system:String>
+    <system:String x:Key="OperDevelopMastery">Skill Mastery</system:String>
+    <system:String x:Key="OperDevelopLevel">Operator Level</system:String>
+    <system:String x:Key="OperDevelopRarity">Rarity</system:String>
+    <system:String x:Key="OperDevelopRole">Class</system:String>
+    <system:String x:Key="OperDevelopAllRarities">All (4-6★)</system:String>
+    <system:String x:Key="OperDevelopAllRoles">All classes</system:String>
+    <system:String x:Key="OperDevelopOperatorPlaceholder">Enter the Chinese operator name</system:String>
+    <system:String x:Key="OperDevelopExcludedOperator">This operator is an Integrated Strategies special operator; develop them through the corresponding IS mode instead.</system:String>
+    <system:String x:Key="OperDevelopSkillLabel">Skill</system:String>
+    <system:String x:Key="OperDevelopMasteryRankLabel">Mastery rank</system:String>
+    <system:String x:Key="OperDevelopSkillOption1">Skill 1</system:String>
+    <system:String x:Key="OperDevelopSkillOption2">Skill 2</system:String>
+    <system:String x:Key="OperDevelopSkillOption3">Skill 3</system:String>
+    <system:String x:Key="OperDevelopTrainingMode">Training plan</system:String>
+    <system:String x:Key="OperDevelopModeHalving">Prefer halving assistants</system:String>
+    <system:String x:Key="OperDevelopModeEfficiency">Highest-efficiency assistant</system:String>
+    <system:String x:Key="OperDevelopPlanHalving">Halving-assisted training</system:String>
+    <system:String x:Key="OperDevelopPlanEfficiency">Efficiency-assisted training</system:String>
+    <system:String x:Key="OperDevelopEstimateHint">Shows the plan and time estimate for the current pending stage. Only the current stage is started; run preflight again after it completes to advance. MAA does not stay attached while a stage is running.</system:String>
+    <system:String x:Key="OperDevelopPreflight">Preflight or continue</system:String>
+    <system:String x:Key="OperDevelopConfirmAndStart">Confirm start</system:String>
+    <system:String x:Key="OperDevelopPreflightStarted">Safety preflight started; no materials will be consumed.</system:String>
+    <system:String x:Key="OperDevelopTaskStartFailed">Failed to start operator development.</system:String>
+    <system:String x:Key="OperDevelopPreflightRequired">The settings or game state changed. Run preflight again.</system:String>
+    <system:String x:Key="OperDevelopNoPendingStage">No new stage is required</system:String>
+    <system:String x:Key="OperDevelopExecutionStarted">Material consumption is authorized for the current stage. Core will recheck the preflight snapshot and live state.</system:String>
+    <system:String x:Key="OperDevelopCnOnly">This version supports CN Official and Bilibili clients only.</system:String>
+    <system:String x:Key="OperDevelopSelectExactOperator">Enter and select an exact Chinese operator name.</system:String>
+    <system:String x:Key="OperDevelopSelectSkill">Select at least one available skill.</system:String>
+    <system:String x:Key="OperDevelopAssistantNotReady">Connect the emulator and wait for other tasks to finish.</system:String>
+    <!--  !Operator Development  -->
     <!--  영상 인식  -->
     <system:String x:Key="VideoRecognition">영상 인식</system:String>
     <system:String x:Key="StartToVideoRecognition">인식 시작</system:String>

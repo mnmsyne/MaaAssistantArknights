@@ -1,0 +1,227 @@
+<UserControl
+    x:Class="MaaWpfGui.Views.UserControl.OperDevelopUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
+    xmlns:controls="clr-namespace:MaaWpfGui.Styles.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="clr-namespace:MaaWpfGui.Styles.Properties"
+    xmlns:s="https://github.com/canton7/Stylet"
+    xmlns:ui_vms="clr-namespace:MaaWpfGui.ViewModels.UI"
+    d:Background="White"
+    d:DataContext="{d:DesignInstance {x:Type ui_vms:OperDevelopViewModel}}"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    s:View.ActionTarget="{Binding}"
+    mc:Ignorable="d">
+    <Grid Margin="24,8,24,24">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" MinWidth="300" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="10">
+            <Border
+                Width="210"
+                MaxWidth="210"
+                HorizontalAlignment="Center"
+                Background="{DynamicResource RegionBrushOpacity25}"
+                BorderBrush="{DynamicResource BorderBrush}"
+                BorderThickness="1"
+                CornerRadius="4">
+                <Grid Width="190" Margin="0">
+                    <ListBox
+                        Width="190"
+                        Margin="0,10"
+                        HorizontalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        SelectedIndex="{Binding OperDevelopModuleIndex}"
+                        Style="{DynamicResource NoSelectedHighlightListBoxStyle}">
+                        <ListBoxItem Padding="10">
+                            <controls:TextBlock Style="{StaticResource MaaTextBlockDefaultStyle}" Text="{DynamicResource OperDevelopMastery}" />
+                        </ListBoxItem>
+                        <ListBoxItem Padding="10">
+                            <controls:TextBlock Style="{StaticResource MaaTextBlockDefaultStyle}" Text="{DynamicResource OperDevelopLevel}" />
+                        </ListBoxItem>
+                    </ListBox>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <hc:ScrollViewer
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                HorizontalScrollBarVisibility="Disabled"
+                IsInertiaEnabled="True"
+                PanningMode="Both"
+                VerticalScrollBarVisibility="Auto">
+                <hc:SimpleStackPanel Width="300" Margin="0,0,14,0">
+                    <UniformGrid Margin="0,0,0,8" Columns="2">
+                        <ComboBox
+                            Margin="0,0,4,0"
+                            DisplayMemberPath="Display"
+                            ItemsSource="{Binding RarityOptions}"
+                            SelectedItem="{Binding SelectedRarity}"
+                            hc:TitleElement.Title="{DynamicResource OperDevelopRarity}" />
+                        <ComboBox
+                            Margin="4,0,0,0"
+                            DisplayMemberPath="Display"
+                            ItemsSource="{Binding RoleOptions}"
+                            SelectedItem="{Binding SelectedRole}"
+                            hc:TitleElement.Title="{DynamicResource OperDevelopRole}" />
+                    </UniformGrid>
+
+                    <ComboBox
+                        Margin="0,0,0,12"
+                        AutomationProperties.AutomationId="OperDevelopOperatorSelector"
+                        AutomationProperties.Name="{DynamicResource Operator}"
+                        DisplayMemberPath="Name"
+                        IsEditable="True"
+                        IsTextSearchEnabled="False"
+                        ItemsSource="{Binding Candidates}"
+                        SelectedItem="{Binding SelectedOperator}"
+                        StaysOpenOnEdit="True"
+                        Text="{Binding OperatorQuery, UpdateSourceTrigger=PropertyChanged}"
+                        hc:InfoElement.Placeholder="{DynamicResource OperDevelopOperatorPlaceholder}"
+                        hc:TitleElement.Title="{DynamicResource Operator}" />
+
+                    <UniformGrid Margin="0,0,0,8" Columns="2" Visibility="{c:Binding IsMasteryModule}">
+                        <ComboBox
+                            Margin="0,0,4,0"
+                            DisplayMemberPath="Display"
+                            ItemsSource="{Binding SkillIndexOptions}"
+                            SelectedValue="{Binding SkillIndex}"
+                            SelectedValuePath="Value"
+                            hc:TitleElement.Title="{DynamicResource OperDevelopSkillLabel}" />
+                        <ComboBox
+                            Margin="4,0,0,0"
+                            SelectedValue="{Binding MasteryRank}"
+                            SelectedValuePath="Tag"
+                            hc:TitleElement.Title="{DynamicResource OperDevelopMasteryRankLabel}">
+                            <ComboBoxItem Content="M1" Tag="1" />
+                            <ComboBoxItem Content="M2" Tag="2" />
+                            <ComboBoxItem Content="M3" Tag="3" />
+                        </ComboBox>
+                    </UniformGrid>
+
+                    <TextBlock
+                        Margin="0,12,0,4"
+                        Text="{DynamicResource OperDevelopTrainingMode}"
+                        Visibility="{c:Binding IsMasteryModule}" />
+                    <ComboBox
+                        DisplayMemberPath="Display"
+                        ItemsSource="{Binding TrainingModeOptions}"
+                        SelectedValue="{Binding TrainingMode}"
+                        SelectedValuePath="Value"
+                        Visibility="{c:Binding IsMasteryModule}" />
+
+                    <Border
+                        Margin="0,4"
+                        Padding="8"
+                        Background="{DynamicResource RegionBrushOpacity25}"
+                        CornerRadius="3"
+                        Visibility="{c:Binding IsMasteryModule}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding StagePlanSummaryText}" TextWrapping="Wrap" />
+                            <TextBlock
+                                Margin="0,4,0,0"
+                                Opacity="0.7"
+                                Text="{DynamicResource OperDevelopEstimateHint}"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+
+                    <TextBlock
+                        Margin="0,8"
+                        Text="{Binding PreflightSummary}"
+                        TextWrapping="Wrap"
+                        Visibility="{c:Binding IsMasteryModule}" />
+                </hc:SimpleStackPanel>
+            </hc:ScrollViewer>
+            <UniformGrid
+                Grid.Row="1"
+                Width="300"
+                Margin="0,10,14,0"
+                HorizontalAlignment="Center"
+                Columns="3"
+                Visibility="{c:Binding IsMasteryModule}">
+                <Button
+                    Height="50"
+                    Margin="0,0,5,0"
+                    Command="{s:Action RunPreflight}"
+                    Content="{DynamicResource OperDevelopPreflight}" />
+                <Button
+                    Height="50"
+                    Margin="5,0"
+                    Command="{s:Action StartConfirmed}"
+                    Content="{DynamicResource OperDevelopConfirmAndStart}"
+                    IsEnabled="{Binding CanConfirmAndStart}" />
+                <Button
+                    Height="50"
+                    Margin="5,0,0,0"
+                    Command="{s:Action StopTask}"
+                    Content="{DynamicResource Stop}" />
+            </UniformGrid>
+        </Grid>
+
+        <Grid Grid.Column="2" Margin="10">
+            <hc:ScrollViewer
+                HorizontalScrollBarVisibility="Disabled"
+                IsInertiaEnabled="True"
+                PanningMode="Both"
+                properties:AutoScroll.AutoScroll="True">
+                <ItemsControl HorizontalContentAlignment="Stretch" ItemsSource="{Binding LogCardViewModels}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Margin="0,0,0,5"
+                                Padding="5,0,5,5"
+                                Background="{DynamicResource MouseOverRegionBrushOpacity10}"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="4">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <controls:TextBlock
+                                        Grid.Column="0"
+                                        Margin="0,5,5,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Foreground="{DynamicResource TraceLogBrush}"
+                                        Text="{Binding StartTime}"
+                                        TextWrapping="Wrap" />
+                                    <ItemsControl Grid.Column="1" ItemsSource="{Binding Items}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <controls:TextBlock
+                                                    Margin="0,5,0,0"
+                                                    HorizontalAlignment="Left"
+                                                    ForegroundKey="{Binding Color}"
+                                                    FontWeight="{Binding Weight}"
+                                                    Text="{Binding DisplayContent}"
+                                                    TextAlignment="Left"
+                                                    TextWrapping="Wrap" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </hc:ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

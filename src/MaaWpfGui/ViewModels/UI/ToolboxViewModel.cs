@@ -53,7 +53,7 @@ namespace MaaWpfGui.ViewModels.UI;
 /// <summary>
 /// The view model of recruit.
 /// </summary>
-public class ToolboxViewModel : Screen
+public partial class ToolboxViewModel : Screen
 {
     private readonly RunningState _runningState;
     private static readonly ILogger _logger = Log.ForContext<ToolboxViewModel>();
@@ -112,8 +112,15 @@ public class ToolboxViewModel : Screen
         InitializeOperBoxRowPresentation();
         OperBoxSelectedIndex = OperBoxNotHaveList.Count > 0 ? 0 : 1;
 
+        OperDevelop = new OperDevelopViewModel();
         UpdateMiniGameTaskList();
     }
+
+    /// <summary>
+    /// Gets the view model backing the 干员培养 (OperDevelop) toolbox tab. Extracted into its own view model;
+    /// see <see cref="OperDevelopViewModel"/>.
+    /// </summary>
+    public OperDevelopViewModel OperDevelop { get; }
 
     private bool _idle;
 

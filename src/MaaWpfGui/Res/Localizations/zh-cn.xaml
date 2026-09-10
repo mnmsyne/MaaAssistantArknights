@@ -1093,6 +1093,39 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="OperBoxExportYes">是</system:String>
     <system:String x:Key="OperBoxExportNo">否</system:String>
     <!--  !干员识别  -->
+    <!--  干员培养  -->
+    <system:String x:Key="OperDevelop">干员培养</system:String>
+    <system:String x:Key="OperDevelopMastery">技能专精</system:String>
+    <system:String x:Key="OperDevelopLevel">干员升级</system:String>
+    <system:String x:Key="OperDevelopRarity">稀有度</system:String>
+    <system:String x:Key="OperDevelopRole">职业</system:String>
+    <system:String x:Key="OperDevelopAllRarities">全部（4-6★）</system:String>
+    <system:String x:Key="OperDevelopAllRoles">全部职业</system:String>
+    <system:String x:Key="OperDevelopOperatorPlaceholder">输入干员中文名</system:String>
+    <system:String x:Key="OperDevelopExcludedOperator">该干员为特勤干员，请通过对应的集成战略主题培养。</system:String>
+    <system:String x:Key="OperDevelopSkillLabel">技能</system:String>
+    <system:String x:Key="OperDevelopMasteryRankLabel">专精等级</system:String>
+    <system:String x:Key="OperDevelopSkillOption1">技能 1</system:String>
+    <system:String x:Key="OperDevelopSkillOption2">技能 2</system:String>
+    <system:String x:Key="OperDevelopSkillOption3">技能 3</system:String>
+    <system:String x:Key="OperDevelopTrainingMode">培养方案</system:String>
+    <system:String x:Key="OperDevelopModeHalving">优先减半协助</system:String>
+    <system:String x:Key="OperDevelopModeEfficiency">最高效率协助</system:String>
+    <system:String x:Key="OperDevelopPlanHalving">减半协助训练</system:String>
+    <system:String x:Key="OperDevelopPlanEfficiency">效率协助训练</system:String>
+    <system:String x:Key="OperDevelopEstimateHint">展示当前待处理阶段的方案与预计用时；实际执行仅开始当前阶段，完成后可重新预检推进下一阶段，MAA 不长期占用等待。</system:String>
+    <system:String x:Key="OperDevelopPreflight">预检或继续</system:String>
+    <system:String x:Key="OperDevelopConfirmAndStart">确认开始</system:String>
+    <system:String x:Key="OperDevelopPreflightStarted">开始安全预检：不会消耗养成材料。</system:String>
+    <system:String x:Key="OperDevelopTaskStartFailed">干员培养任务启动失败。</system:String>
+    <system:String x:Key="OperDevelopPreflightRequired">配置或现场状态已变化，请重新预检。</system:String>
+    <system:String x:Key="OperDevelopNoPendingStage">无需开始新阶段</system:String>
+    <system:String x:Key="OperDevelopExecutionStarted">已授权本次当前阶段的专精材料消耗；Core 将再次核对预检快照与现场状态。</system:String>
+    <system:String x:Key="OperDevelopCnOnly">当前版本仅支持国服官服和 B 服。</system:String>
+    <system:String x:Key="OperDevelopSelectExactOperator">请输入并选择一个完全匹配的干员中文名。</system:String>
+    <system:String x:Key="OperDevelopSelectSkill">请至少勾选一个可专精技能。</system:String>
+    <system:String x:Key="OperDevelopAssistantNotReady">请先连接模拟器，并等待其他任务结束。</system:String>
+    <!--  !干员培养  -->
     <!--  视频识别  -->
     <system:String x:Key="VideoRecognition">视频识别</system:String>
     <system:String x:Key="StartToVideoRecognition">开始识别</system:String>
