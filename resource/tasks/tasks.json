@@ -5883,5 +5883,171 @@
             "YellowTicket@Store@ClickItem_Ten-roll_Headhunting_Permit",
             "Stop"
         ]
+    },
+    "OperDevelopRoleFilterArea": {
+        "template": "empty.png",
+        "roi": [1170, 0, 110, 90]
+    },
+    "OperDevelopRoleFilterFullTopROI": {
+        "template": "empty.png",
+        "roi": [0, 78, 1280, 50]
+    },
+    "OperDevelopRoleFilterFullBottomROI": {
+        "template": "empty.png",
+        "roi": [0, 394, 1280, 50]
+    },
+    "OperDevelopRoleFilterFallbackTopROI": {
+        "template": "empty.png",
+        "roi": [0, 78, 1145, 50]
+    },
+    "OperDevelopRoleFilterFallbackBottomROI": {
+        "template": "empty.png",
+        "roi": [0, 394, 1145, 50]
+    },
+    "OperDevelopSkillPanelHeaderArea": {
+        "template": "empty.png",
+        "roi": [870, 15, 220, 70]
+    },
+    "OperDevelopSkillRankArea": {
+        "template": "empty.png",
+        "roi": [850, 350, 400, 330]
+    },
+    "OperDevelopSkillIcon1": {
+        "template": "empty.png",
+        "roi": [900, 86, 80, 96]
+    },
+    "OperDevelopSkillIcon2": {
+        "baseTask": "OperDevelopSkillIcon1",
+        "template": "empty.png",
+        "roi": [1012, 86, 80, 96]
+    },
+    "OperDevelopSkillIcon3": {
+        "baseTask": "OperDevelopSkillIcon1",
+        "template": "empty.png",
+        "roi": [1124, 86, 80, 96]
+    },
+    "OperDevelopMasteryMarker1": {
+        "template": "empty.png",
+        "roi": [899, 84, 22, 22]
+    },
+    "OperDevelopMasteryMarker2": {
+        "baseTask": "OperDevelopMasteryMarker1",
+        "template": "empty.png",
+        "roi": [1011, 84, 22, 22]
+    },
+    "OperDevelopMasteryMarker3": {
+        "baseTask": "OperDevelopMasteryMarker1",
+        "template": "empty.png",
+        "roi": [1123, 84, 22, 22]
+    },
+    "OperDevelopMasteryButtonArea": {
+        "template": "empty.png",
+        "roi": [850, 250, 400, 430]
+    },
+    "OperDevelopSkillPanelExpandArea": {
+        "template": "empty.png",
+        "roi": [1117, 417, 25, 18]
+    },
+    "OperDevelopMasteryListFlag": {
+        "baseTask": "InfrastTrainingAssistantFlag"
+    },
+    "OperDevelopTrainingCompletionResultArea": {
+        "template": "empty.png",
+        "roi": [500, 430, 620, 180]
+    },
+    "OperDevelopTrainingCompletionStabilityArea": {
+        "baseTask": "OperDevelopTrainingCompletionResultArea",
+        "template": "empty.png",
+        "roi": [500, 470, 370, 160]
+    },
+    "OperDevelopTrainingCompletionConfirm": {
+        "algorithm": "JustReturn",
+        "action": "ClickRect",
+        "specificRect": [760, 540, 90, 90]
+    },
+    "OperDevelopTrainingProcessingFlag": {
+        "algorithm": "OcrDetect",
+        "text": ["训练中"],
+        "roi": [95, 230, 250, 120]
+    },
+    "OperDevelopTrainingTime1": {
+        "baseTask": "NumberOcrReplace",
+        "roi": [495, 205, 205, 55]
+    },
+    "OperDevelopTrainingTime2": {
+        "baseTask": "OperDevelopTrainingTime1",
+        "roi": [495, 410, 205, 55]
+    },
+    "OperDevelopTrainingTime3": {
+        "baseTask": "OperDevelopTrainingTime1",
+        "roi": [495, 612, 205, 55]
+    },
+    "OperDevelopOpenTrainee": {
+        "algorithm": "JustReturn",
+        "action": "ClickRect",
+        "specificRect": [150, 145, 130, 130],
+        "postDelay": 800
+    },
+    "OperDevelopConfirmTrainee": {
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": ["确认"],
+        "roi": [850, 620, 350, 90],
+        "postDelay": 800
+    },
+    "OperDevelopTraineeNamesArea": {
+        "template": "empty.png",
+        "roi": [350, 60, 850, 590]
+    },
+    "OperDevelopSelectedTraineeNameArea": {
+        "template": "empty.png",
+        "roi": [0, 60, 260, 90],
+        "roi_Doc": "干员选择页左侧详情中的已选干员名称区域；单字名兜底点击后在此进行稳定精确识别"
+    },
+    "OperDevelopCostFlag": {
+        "algorithm": "OcrDetect",
+        "text": ["是否专精该技能"],
+        "roi": [930, 530, 315, 65]
+    },
+    "OperDevelopMaterialConfirmArea": {
+        "template": "empty.png",
+        "roi": [830, 560, 430, 120]
+    },
+    "OperDevelopMaterialLevelCell": {
+        "template": "empty.png",
+        "roi": [195, 669, 90, 24],
+        "specialParams": [175, 255],
+        "roi_Doc": "等级要求栏位（数量文本区），不属于材料，单独解析上报，不参与材料数量统计。roi 裁剪至色块本体，specialParams 为 R 通道二值化阈值"
+    },
+    "OperDevelopMaterialCell1": {
+        "template": "empty.png",
+        "roi": [333, 669, 90, 24],
+        "specialParams": [175, 255],
+        "roi_Doc": "技能书栏位（数量文本区）。roi 裁剪至色块本体，specialParams 为 R 通道二值化阈值"
+    },
+    "OperDevelopMaterialCell2": {
+        "baseTask": "OperDevelopMaterialCell1",
+        "template": "empty.png",
+        "roi": [470, 669, 90, 24],
+        "roi_Doc": "材料1栏位（数量文本区）"
+    },
+    "OperDevelopMaterialCell3": {
+        "baseTask": "OperDevelopMaterialCell1",
+        "template": "empty.png",
+        "roi": [607, 669, 90, 24],
+        "roi_Doc": "材料2栏位（数量文本区）。本页最多 3 个材料栏位，实际存在数量取决于阶段消耗，栏位不存在时该区域读不出 N/M 文本，视为该槽不存在"
+    },
+    "OperDevelopSwipeToTheLeft": {
+        "baseTask": "SlowlySwipeToTheLeft",
+        "specificRect": [100, 350, 20, 20],
+        "rectMove": [1090, 350, 20, 20]
+    },
+    "OperDevelopLeaveInfrastConfirm": {
+        "algorithm": "OcrDetect",
+        "text": ["是否确认离开罗德岛基建"],
+        "roi": [380, 240, 520, 140],
+        "action": "ClickRect",
+        "specificRect": [700, 460, 500, 80],
+        "next": []
     }
 }

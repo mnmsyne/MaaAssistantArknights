@@ -20,7 +20,8 @@ bool asst::OperBoxImageAnalyzer::analyze()
     m_result.clear();
 
     bool ret = analyzer_oper_box();
-    if (m_result.size() != 16 && m_result.size() != 14) { // 完整的一页是14或16个，有可能是识别错了
+    // 完整的一页是14或16个，有可能是识别错了；设置了职业过滤器时一页本来就不足这个数，不算异常
+    if (!m_role_filter && m_result.size() != 16 && m_result.size() != 14) {
         save_img(utils::path("debug") / utils::path("oper"));
     }
 
@@ -84,16 +85,23 @@ bool asst::OperBoxImageAnalyzer::opers_analyze()
         }
         std::vector<OperResult> list;
         for (const auto& flag : matcher.get_result()) {
+            const Rect name_roi = flag.rect.move(name_task->rect_move);
+            const Rect image_rect { 0, 0, m_image.cols, m_image.rows };
+            if (!image_rect.include(name_roi)) {
+                Log.info(__FUNCTION__, "skip partially visible operator card", flag.rect, "name roi", name_roi);
+                continue;
+            }
+
             OperNameAnalyzer name_analyzer(m_image);
             name_analyzer.set_task_info(name_task);
             name_analyzer.set_required(std::vector(all_opers.begin(), all_opers.end()));
-            name_analyzer.set_roi(flag.rect.move(name_task->rect_move));
+            name_analyzer.set_roi(name_roi);
             name_analyzer.set_bin_threshold(params[0]);
             name_analyzer.set_bin_expansion(params[1]);
             name_analyzer.set_bin_trim_threshold(params[2], params[3]);
             name_analyzer.set_bottom_line_height(params[4]);
             name_analyzer.set_width_threshold(params[5]);
-            [[maybe_unused]] cv::Mat debug_img = make_roi(m_image, flag.rect.move(name_task->rect_move));
+            [[maybe_unused]] cv::Mat debug_img = make_roi(m_image, name_roi);
             if (auto ocr_opt = name_analyzer.analyze()) {
                 OperResult ocr { ocr_opt->rect, ocr_opt->score, std::move(ocr_opt->text), flag.rect, flag.score, role };
                 list.emplace_back(std::move(ocr));
@@ -110,8 +118,8 @@ bool asst::OperBoxImageAnalyzer::opers_analyze()
 
     std::vector<OperResult> results;
 
-    Rect roi_top = Task.get("OperBoxFlagRoleTopROI")->roi;
-    Rect roi_bottom = Task.get("OperBoxFlagRoleBottomROI")->roi;
+    const Rect roi_top = m_role_top_roi.empty() ? Task.get("OperBoxFlagRoleTopROI")->roi : m_role_top_roi;
+    const Rect roi_bottom = m_role_bottom_roi.empty() ? Task.get("OperBoxFlagRoleBottomROI")->roi : m_role_bottom_roi;
 
     const static std::array<std::pair<std::string, battle::Role>, 9> role_tasks { {
         { "OperBoxFlagRole1", battle::Role::Caster },
@@ -126,6 +134,12 @@ bool asst::OperBoxImageAnalyzer::opers_analyze()
     } };
 
     for (int i = 0; i < 9; ++i) {
+        // Warrior maps to both OperBoxFlagRole8 and Role9 (dual template), so filtering must keep both entries
+        // rather than stopping at the first match for the filtered role.
+        if (m_role_filter && role_tasks[i].second != *m_role_filter) {
+            continue;
+        }
+
         if (auto top_result_opt = analyze_task(role_tasks[i].first, roi_top, role_tasks[i].second)) {
             std::ranges::move(*top_result_opt, std::back_inserter(results));
         }

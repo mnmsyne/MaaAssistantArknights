@@ -235,6 +235,32 @@ inline static Role parse_role_type(std::string role_name, battle::Role fallback_
     return fallback_role;
 }
 
+// Role → the English token used by the BattleQuickFormationRole-* task names ("BattleQuickFormationRole-" +
+// result). Returns an empty string for roles without a tab (Unknown/Drone).
+inline static std::string get_role_task_name(Role role)
+{
+    switch (role) {
+    case Role::Pioneer:
+        return "Pioneer";
+    case Role::Warrior:
+        return "Warrior";
+    case Role::Tank:
+        return "Tank";
+    case Role::Sniper:
+        return "Sniper";
+    case Role::Caster:
+        return "Caster";
+    case Role::Medic:
+        return "Medic";
+    case Role::Support:
+        return "Support";
+    case Role::Special:
+        return "Special";
+    default:
+        return {};
+    }
+}
+
 enum class OperPosition
 {
     None,
