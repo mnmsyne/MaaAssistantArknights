@@ -3939,7 +3939,6 @@
             [" [Yy]$", " γ"]
         ]
     },
-
     "InfrastTrainingSkillImg": {
         "template": "empty.png",
         "roi": [28, 558, 106, 108]
