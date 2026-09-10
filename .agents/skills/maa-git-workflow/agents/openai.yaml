@@ -1,0 +1,4 @@
+interface:
+  display_name: "MAA Git Workflow"
+  short_description: "同步远端基线、安全 rebase Codex 分支并隔离上游 PR"
+  default_prompt: "使用 $maa-git-workflow 审查当前 MAA 工作区，并按请求安全地同步、rebase、恢复或发布指定 Git 分支。"
