@@ -18,11 +18,13 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using MaaWpfGui.Configuration.Single.MaaTask;
 using MaaWpfGui.Constants;
 using MaaWpfGui.Constants.Enums;
 using MaaWpfGui.Helper;
+using MaaWpfGui.Main;
 using MaaWpfGui.Models;
 using MaaWpfGui.Models.AsstTasks;
 using MaaWpfGui.States;
@@ -31,6 +33,7 @@ using MaaWpfGui.Utilities.ValueType;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Serilog;
+using Stylet;
 using static MaaWpfGui.Main.AsstProxy;
 using Mode = MaaWpfGui.ViewModels.UserControl.TaskQueue.InfrastMode;
 
@@ -58,6 +61,83 @@ public class InfrastSettingsUserControlModel : TaskSettingsViewModel, InfrastSet
                     SaveWeeklySchedule();
                 }
             };
+        }
+
+        _runningState.StateChanged += (_, _) => Execute.OnUIThread(() =>
+        {
+            NotifyOfPropertyChange(nameof(CanImportPresets));
+        });
+    }
+
+    private bool _presetImportStarting;
+
+    [PropertyDependsOn(nameof(CustomInfrastFile))]
+    public bool CanImportPresets => !_presetImportStarting && _runningState.CanInterrupt() && File.Exists(CustomInfrastFile);
+
+    public async Task ImportPresets()
+    {
+        if (!CanImportPresets)
+        {
+            return;
+        }
+
+        if (Bootstrapper.TryGetTaskBlockReason() is { } reason)
+        {
+            Instances.TaskQueueViewModel.AddLog(reason, UiLogColor.Error);
+            return;
+        }
+
+        var filename = CustomInfrastFile;
+        if (!File.Exists(filename))
+        {
+            Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("InfrastPresetImportInvalid"), UiLogColor.Error);
+            return;
+        }
+
+        _presetImportStarting = true;
+        _runningState.BeginRun(RunOwner.InfrastPresetImport);
+        var started = false;
+        try
+        {
+            string error = string.Empty;
+            Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("ConnectingToEmulator"));
+            if (!await Task.Run(() => Instances.AsstProxy.AsstConnect(ref error)))
+            {
+                Instances.TaskQueueViewModel.AddLog(error, UiLogColor.Error);
+                return;
+            }
+
+            if (_runningState.Owner != RunOwner.InfrastPresetImport)
+            {
+                return;
+            }
+
+            Instances.AsstProxy.AsstStop();
+            var task = new AsstInfrastTask { PresetInit = true, Filename = filename };
+            if (!Instances.AsstProxy.AsstAppendTaskWithEncoding(TaskType.Infrast, task).IsSuccess || !Instances.AsstProxy.AsstStart())
+            {
+                Instances.AsstProxy.AsstStop();
+                Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("InfrastPresetImportInvalid"), UiLogColor.Error);
+                return;
+            }
+
+            started = true;
+        }
+        catch (Exception ex)
+        {
+            _logger.Error(ex, "Failed to start infrastructure preset import");
+            Instances.AsstProxy.AsstStop();
+            Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("InfrastPresetImportInvalid"), UiLogColor.Error);
+        }
+        finally
+        {
+            _presetImportStarting = false;
+            if (!started && _runningState.Owner == RunOwner.InfrastPresetImport)
+            {
+                _runningState.SetIdle(true);
+            }
+
+            NotifyOfPropertyChange(nameof(CanImportPresets));
         }
     }
 

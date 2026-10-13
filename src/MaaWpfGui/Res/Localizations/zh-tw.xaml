@@ -2737,4 +2737,24 @@ DEBUG 目錄下儲存的圖片有數量限制，超出後會自動清理舊圖�
     <system:String x:Key="ExternalNotificationFilterPreviousLogs">篩選附帶日誌內容</system:String>
     <system:String x:Key="ExternalNotificationFilterPreviousLogsTip" xml:space="preserve">先排除符合黑名單的日誌，再依數量及有效時間選取最近的日誌。&#10;目前日誌始終保留。</system:String>
     <system:String x:Key="ExternalNotificationBlacklist">黑名單（每行一條，支援正則）</system:String>
+    <system:String x:Key="InfrastPresetImport">匯入預設隊列</system:String>
+    <system:String x:Key="InfrastPresetImportTip" xml:space="preserve">將目前 JSON 的前 3 個計畫寫入遊戲基建預設隊列 1–3，同名隊列會被覆寫。&#10;名單一致時保留原隊列；缺少的隊列會新增，超出該房間最後一個匯入計畫的隊列會刪除。&#10;僅支援固定幹員；目標房間需在遊戲內儲存過至少一條預設隊列，否則會匯入中止。跳過空名單、動態選人及宿舍等不支援的設施。&#10;不會立即換班，也不會自動切換 MAA 基建模式。停止或失敗後，已儲存的隊列會保留。</system:String>
+    <system:String x:Key="InfrastPresetImportRoom">預設匯入 · {0} {1}</system:String>
+    <system:String x:Key="InfrastPresetImportCompleted">匯入完成 · 已寫入 {0} 條隊列</system:String>
+    <system:String x:Key="InfrastPresetImportFailed">匯入失敗 · {0} · 已儲存並複核 {1}/{2} 條；未複核隊列的狀態可能已改變。</system:String>
+    <system:String x:Key="InfrastPresetImportWarning_product_mismatch">無法確認 {0} {1} 的產物與配置一致，已停止匯入。請核對配方、訂單類型與設施順序。</system:String>
+    <system:String x:Key="InfrastPresetImportInvalid">匯入啟動失敗：請檢查連線、JSON 格式及固定幹員名單。</system:String>
+    <system:String x:Key="InfrastPresetImportQueue">隊列 {0}：{1}</system:String>
+    <system:String x:Key="InfrastPresetImportCancelledSummary">{0} · 已儲存並複核 {1}/{2} 條；未複核隊列的狀態可能已改變。</system:String>
+    <system:String x:Key="InfrastPresetImportPartial">匯入結束 · 已完成 {0}/{1} 條隊列</system:String>
+    <system:String x:Key="InfrastPresetImportLocation">目前位置：{0} {1} · 隊列 {2}</system:String>
+    <system:String x:Key="InfrastPresetImportWarning_extra_plans">僅匯入前 3 個計畫，後續計畫已忽略。</system:String>
+    <system:String x:Key="InfrastPresetImportWarning_dynamic_room">已跳過含備選幹員、自動填充或幹員編組的房間。</system:String>
+    <system:String x:Key="InfrastPresetImportStatus_cancelled">匯入已取消，已儲存的隊列會保留</system:String>
+    <system:String x:Key="InfrastPresetImportReason_room">無法定位目標房間或核對房間名稱。</system:String>
+    <system:String x:Key="InfrastPresetImportReason_queue_gap">目標隊列之前存在尚未建立的空槽。</system:String>
+    <system:String x:Key="InfrastPresetImportReason_product_mismatch">產物不符或識別失敗</system:String>
+    <system:String x:Key="InfrastPresetImportReason_navigation">頁面導航或返回失敗。</system:String>
+    <system:String x:Key="InfrastPresetImportReason_queue_count">無法識別房間內已保存的佇列數量。</system:String>
+    <system:String x:Key="InfrastPresetImportReason_selection_or_save">選人、儲存或回讀複核失敗。</system:String>
 </ResourceDictionary>

@@ -1467,7 +1467,7 @@ public class AsstProxy
                     {
                         case "Infrast":
                             {
-                                if (task is InfrastTask infrastTask)
+                                if (_runningState.Owner == RunOwner.TaskQueue && task is InfrastTask infrastTask)
                                 {
                                     InfrastSettingsUserControlModel.IncreaseCustomInfrastPlanIndex(infrastTask);
                                 }
@@ -2662,7 +2662,92 @@ public class AsstProxy
 
                 break;
 
+            case "InfrastPresetImport":
+                var presetStatus = subTaskDetails?["status"]?.ToString() ?? "failed";
+                var presetReason = subTaskDetails?["reason"]?.ToString() ?? string.Empty;
+                var presetFacilityKey = subTaskDetails?["facility"]?.ToString() ?? string.Empty;
+                var presetFacility = string.IsNullOrEmpty(presetFacilityKey) ? string.Empty : LocalizationHelper.GetString(presetFacilityKey);
+                var presetRoom = (int)(subTaskDetails?["index"] ?? -1) + 1;
+                var presetDone = (int?)subTaskDetails?["completed"] ?? 0;
+                var presetTotal = (int?)subTaskDetails?["total"] ?? 0;
+                var presetSlot = subTaskDetails?["slot"]?.ToString() ?? "0";
+                var presetColor = UiLogColor.Trace;
+                var presetSplit = TaskQueueViewModel.LogCardSplitMode.None;
+                string presetMessage = string.Empty;
+                switch (presetStatus)
+                {
+                    case "progress":
+                    case "created":
+                        RunningState.Instance.NotifyOutputActivity();
+                        break;
+                    case "warning":
+                        presetColor = UiLogColor.Warning;
+                        presetMessage = presetReason switch
+                        {
+                            "product_mismatch" => LocalizationHelper.GetStringFormat("InfrastPresetImportWarning_product_mismatch", presetFacility, presetRoom),
+                            _ => LocalizationHelper.GetString("InfrastPresetImportWarning_" + presetReason),
+                        };
+                        break;
+                    case "room":
+                        presetMessage = LocalizationHelper.GetStringFormat("InfrastPresetImportRoom", presetFacility, presetRoom);
+                        presetSplit = TaskQueueViewModel.LogCardSplitMode.Before;
+                        break;
+                    case "failed":
+                    case "cancelled":
+                    {
+                        var reasonText = presetStatus == "cancelled"
+                            ? LocalizationHelper.GetString("InfrastPresetImportStatus_cancelled")
+                            : LocalizationHelper.GetString("InfrastPresetImportReason_" + presetReason);
+                        presetMessage = LocalizationHelper.GetStringFormat(
+                            presetStatus == "cancelled" ? "InfrastPresetImportCancelledSummary" : "InfrastPresetImportFailed",
+                            reasonText, presetDone, presetTotal);
+                        if (!string.IsNullOrEmpty(presetFacility) && presetRoom > 0 && presetSlot != "0")
+                        {
+                            presetMessage += "\n" + LocalizationHelper.GetStringFormat("InfrastPresetImportLocation", presetFacility, presetRoom, presetSlot);
+                        }
+
+                        presetColor = presetStatus == "cancelled" ? UiLogColor.Trace : UiLogColor.Error;
+                        presetSplit = TaskQueueViewModel.LogCardSplitMode.Both;
+                        break;
+                    }
+
+                    case "completed":
+                        presetMessage = LocalizationHelper.GetStringFormat(
+                            presetDone == presetTotal ? "InfrastPresetImportCompleted" : "InfrastPresetImportPartial",
+                            presetDone, presetTotal);
+                        presetColor = presetDone == presetTotal ? UiLogColor.Trace : UiLogColor.Warning;
+                        presetSplit = TaskQueueViewModel.LogCardSplitMode.Both;
+                        break;
+
+                    case "saved":
+                    {
+                        var operatorStr = (subTaskDetails?["names"] as JArray)?
+                            .Select(n => DataHelper.GetLocalizedCharacterName(n.ToString()))
+                            .Where(n => !string.IsNullOrEmpty(n)) is { } names ? string.Join(", ", names) : string.Empty;
+                        presetMessage = LocalizationHelper.GetStringFormat("InfrastPresetImportQueue", presetSlot, operatorStr);
+                        break;
+                    }
+
+                    default:
+                        RunningState.Instance.NotifyOutputActivity();
+                        break;
+                }
+
+                if (string.IsNullOrEmpty(presetMessage))
+                {
+                    break;
+                }
+
+                Instances.TaskQueueViewModel.AddLog(presetMessage, presetColor, splitMode: presetSplit);
+                break;
+
             case "CustomInfrastRoomOperators":
+                if (RunningState.Instance.Owner == RunOwner.InfrastPresetImport)
+                {
+                    // The import lines already carry per-slot progress; the operator list would only add noise.
+                    break;
+                }
+
                 string nameStr = (subTaskDetails!["names"] ?? new JArray())
                     .Aggregate(string.Empty, (current, name) => current + DataHelper.GetLocalizedCharacterName(name.ToString()) + ", ");
 

@@ -116,8 +116,20 @@ public class AsstInfrastTask : AsstBaseTask
     /// </summary>
     public int PlanIndex { get; set; }
 
+    public bool PresetInit { get; set; }
+
     public override (AsstTaskType TaskType, JObject Params) Serialize()
     {
+        if (PresetInit)
+        {
+            return (TaskType, new JObject
+            {
+                ["mode"] = (int)InfrastMode.Custom,
+                ["preset_init"] = true,
+                ["filename"] = Filename,
+            });
+        }
+
         var fiammettaTargets = FiammettaTargets
             .Where(target => !string.IsNullOrWhiteSpace(target))
             .Distinct()

@@ -97,6 +97,14 @@
                     Margin="0,5"
                     IsReadOnly="{Binding IsCustomInfrastFileReadOnly}"
                     Text="{Binding CustomInfrastFile}" />
+                <WrapPanel Margin="0,5">
+                    <Button
+                        Command="{s:Action ImportPresets}"
+                        Content="{DynamicResource InfrastPresetImport}"
+                        IsEnabled="{Binding CanImportPresets}" />
+                    <controls:TooltipBlock Margin="5,0" TooltipText="{DynamicResource InfrastPresetImportTip}" />
+
+                </WrapPanel>
             </StackPanel>
             <ComboBox
                 Margin="0,5"

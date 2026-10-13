@@ -2739,4 +2739,24 @@ MAA を複数開くには、新しい MAA を他のフォルダにコピーし�
     <system:String x:Key="ExternalNotificationFilterPreviousLogs">添付ログの内容をフィルタリング</system:String>
     <system:String x:Key="ExternalNotificationFilterPreviousLogsTip" xml:space="preserve">ブラックリストに一致するログを除外し、残りから件数と有効時間の範囲内で最新のログを選びます。&#10;現在のログは必ず残します。</system:String>
     <system:String x:Key="ExternalNotificationBlacklist">ブラックリスト（1行に1つの正規表現）</system:String>
+    <system:String x:Key="InfrastPresetImport">プリセットをインポート</system:String>
+    <system:String x:Key="InfrastPresetImportTip" xml:space="preserve">現在の JSON の最初の 3 プランをゲーム内基地のプリセット 1–3 に書き込み、既存の隊列を上書きします。&#10;リストが一致する隊列は保持し、不足する隊列は追加します。各部屋の最後のインポート対象プランより後の隊列は削除します。&#10;固定オペレーターのみ対応。対象の部屋にはゲーム内で保存済みのプリセットが 1 つ以上必要で、なければ中断されます。空リスト、動的選択、宿舎などの非対応施設はスキップします。&#10;配置交代や MAA の基地モード変更は行いません。停止・失敗しても保存済みの隊列は残ります。</system:String>
+    <system:String x:Key="InfrastPresetImportRoom">プリセット · {0} {1}</system:String>
+    <system:String x:Key="InfrastPresetImportCompleted">インポート完了 · {0} 件のキューを書き込み</system:String>
+    <system:String x:Key="InfrastPresetImportFailed">インポート失敗 · {0} · {1}/{2} 件を保存・検証済み。未検証の隊列は変更された可能性があります。</system:String>
+    <system:String x:Key="InfrastPresetImportWarning_product_mismatch">{0} {1} の生産物が設定と一致することを確認できないため、インポートを停止しました。レシピ、受注タイプ、施設の順序を確認してください。</system:String>
+    <system:String x:Key="InfrastPresetImportInvalid">インポートを開始できません。接続、JSON 形式、固定オペレーター一覧を確認してください。</system:String>
+    <system:String x:Key="InfrastPresetImportQueue">隊列 {0}：{1}</system:String>
+    <system:String x:Key="InfrastPresetImportCancelledSummary">{0} · {1}/{2} 件を保存・検証済み。未検証の隊列は変更された可能性があります。</system:String>
+    <system:String x:Key="InfrastPresetImportPartial">インポート終了 · {0}/{1} 件の隊列が完了</system:String>
+    <system:String x:Key="InfrastPresetImportLocation">現在位置：{0} {1} · 隊列 {2}</system:String>
+    <system:String x:Key="InfrastPresetImportWarning_extra_plans">最初の 3 プランのみインポートします。以降のプランは無視しました。</system:String>
+    <system:String x:Key="InfrastPresetImportWarning_dynamic_room">候補、自動補充、オペレーターグループを使用する部屋はスキップしました。</system:String>
+    <system:String x:Key="InfrastPresetImportStatus_cancelled">インポート中止。保存済みの隊列は残ります</system:String>
+    <system:String x:Key="InfrastPresetImportReason_room">対象部屋の検出または確認に失敗しました。</system:String>
+    <system:String x:Key="InfrastPresetImportReason_queue_gap">前のスキップした隊列が未作成です。</system:String>
+    <system:String x:Key="InfrastPresetImportReason_product_mismatch">生産物の不一致または認識失敗</system:String>
+    <system:String x:Key="InfrastPresetImportReason_navigation">画面移動または戻る操作に失敗しました。</system:String>
+    <system:String x:Key="InfrastPresetImportReason_queue_count">部屋に保存済みのキュー数を認識できませんでした。</system:String>
+    <system:String x:Key="InfrastPresetImportReason_selection_or_save">選択、保存、再確認に失敗しました。</system:String>
 </ResourceDictionary>
