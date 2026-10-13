@@ -1,0 +1,184 @@
+{
+    "InfrastPresetBegin": {
+        "algorithm": "JustReturn",
+        "next": [
+            "InfrastPresetCloseEditor",
+            "InfrastPresetOverview",
+            "InfrastPresetEnterOverview",
+            "InfrastPreset@Infrast",
+            "InfrastPreset@InfrastLoading",
+            "InfrastPreset@Return"
+        ],
+        "maxTimes": 30
+    },
+    "InfrastPreset@Infrast": {
+        "next": ["InfrastPresetBegin"],
+        "template": "SwitchTheme@ToggleSettingsMenu.png"
+    },
+    "InfrastPreset@InfrastLoading": {
+        "next": ["InfrastPresetBegin"],
+        "template": "InfrastPic/InfrastLoading.png"
+    },
+    "InfrastPreset@Return": {
+        "next": ["InfrastPresetBegin"],
+        "template": "Return.png"
+    },
+    "InfrastPresetEnterOverview": {
+        "baseTask": "InfrastEnterRotation",
+        "next": ["InfrastPresetOverview"],
+        "template": "InfrastOverviewEnter.png"
+    },
+    "InfrastPresetOverview": {
+        "algorithm": "OcrDetect",
+        "text": ["工作区情况"],
+        "roi": [40, 85, 300, 50]
+    },
+    "InfrastPresetOverviewRoom": {
+        "algorithm": "OcrDetect",
+        "text": [],
+        "fullMatch": false,
+        "roi": [430, 80, 110, 545]
+    },
+    "InfrastPresetRoomControl": {
+        "algorithm": "OcrDetect",
+        "text": ["控制中枢"]
+    },
+    "InfrastPresetRoomMfg": {
+        "algorithm": "OcrDetect",
+        "text": ["制造站"]
+    },
+    "InfrastPresetRoomTrade": {
+        "algorithm": "OcrDetect",
+        "text": ["贸易站"]
+    },
+    "InfrastPresetRoomPower": {
+        "algorithm": "OcrDetect",
+        "text": ["发电站"]
+    },
+    "InfrastPresetRoomReception": {
+        "algorithm": "OcrDetect",
+        "text": ["会客室"]
+    },
+    "InfrastPresetRoomOffice": {
+        "algorithm": "OcrDetect",
+        "text": ["办公室"]
+    },
+    "InfrastPresetEditQueue": {
+        "algorithm": "OcrDetect",
+        "text": ["编辑队列"],
+        "roi": [430, 80, 160, 545]
+    },
+    "InfrastPresetEditorProduct": {
+        "algorithm": "OcrDetect",
+        "text": [],
+        "roi": [340, 40, 260, 55]
+    },
+    "InfrastPresetEditorRoom": {
+        "algorithm": "OcrDetect",
+        "text": [],
+        "roi": [260, 45, 110, 45]
+    },
+    "InfrastPresetSelectorRoom": {
+        "baseTask": "InfrastPresetEditorRoom",
+        "roi": [20, 85, 250, 50]
+    },
+    "InfrastPresetEditor": {
+        "algorithm": "OcrDetect",
+        "text": ["预设队列"],
+        "roi": [260, 300, 330, 40]
+    },
+    "InfrastPresetQueue": {
+        "algorithm": "OcrDetect",
+        "text": ["队列"],
+        "fullMatch": true,
+        "roi": [270, 350, 165, 270],
+        "rectMove": [215, 20, 20, 20]
+    },
+    "InfrastPresetDeleteQueue": {
+        "algorithm": "OcrDetect",
+        "text": ["队列"],
+        "rectMove": [0, 78, 35, 20]
+    },
+    "InfrastPresetDeleteConfirm": {
+        "algorithm": "OcrDetect",
+        "text": ["是否删除该排班预设"],
+        "roi": [400, 260, 480, 120],
+        "action": "ClickRect",
+        "specificRect": [830, 485, 25, 25],
+        "postDelay": 800
+    },
+    "InfrastPresetAddQueue": {
+        "algorithm": "OcrDetect",
+        "text": ["新增预设工作队列"],
+        "roi": [550, 350, 380, 280]
+    },
+    "InfrastPresetSelector": {
+        "baseTask": "InfrastClearButton",
+        "action": "DoNothing",
+        "template": "InfrastClearButton.png"
+    },
+    "InfrastPresetSelectorPage": {
+        "algorithm": "OcrDetect",
+        "text": ["确认"],
+        "roi": [1100, 650, 170, 60]
+    },
+    "InfrastPresetConfirm": {
+        "algorithm": "OcrDetect",
+        "text": ["确认"],
+        "roi": [1100, 650, 170, 60],
+        "action": "ClickSelf",
+        "postDelay": 1000,
+        "next": []
+    },
+    "InfrastPresetCancelSelection": {
+        "baseTask": "Return",
+        "next": [],
+        "template": "Return.png"
+    },
+    "InfrastPresetCloseEditor": {
+        "baseTask": "InfrastPresetEditor",
+        "action": "ClickRect",
+        "specificRect": [90, 280, 15, 20],
+        "postDelay": 500,
+        "next": ["InfrastPresetOverview"]
+    },
+    "InfrastPresetOverviewTop": {
+        "algorithm": "JustReturn",
+        "action": "Swipe",
+        "specificRect": [850, 160, 10, 10],
+        "rectMove": [850, 590, 10, 10],
+        "specialParams": [500],
+        "postDelay": 400,
+        "maxTimes": 5,
+        "next": ["InfrastPresetResetOverview"],
+        "exceededNext": ["Stop"]
+    },
+    "InfrastPresetOverviewDown": {
+        "baseTask": "InfrastPresetOverviewTop",
+        "specificRect": [850, 580, 10, 10],
+        "rectMove": [850, 300, 10, 10],
+        "next": [],
+        "maxTimes": 1
+    },
+    "InfrastPresetQueueDown": {
+        "baseTask": "InfrastPresetOverviewDown",
+        "specificRect": [750, 590, 10, 10],
+        "rectMove": [750, 370, 10, 10]
+    },
+    "InfrastPresetResetOverview": {
+        "algorithm": "JustReturn",
+        "next": ["InfrastPresetOverviewAtTop", "InfrastPresetOverviewTop"]
+    },
+    "InfrastPresetOverviewAtTop": {
+        "algorithm": "OcrDetect",
+        "text": ["控制中枢"],
+        "roi": [430, 80, 165, 90]
+    },
+    "InfrastPresetQueueTop": {
+        "baseTask": "InfrastPresetOverviewTop",
+        "specificRect": [750, 370, 10, 10],
+        "rectMove": [750, 590, 10, 10],
+        "maxTimes": 2,
+        "next": ["#self"]
+    }
+}

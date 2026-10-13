@@ -40,6 +40,8 @@ public:
 private:
     bool parse_and_set_custom_config(const std::filesystem::path& path, int index);
 
+    bool m_preset_init = false;
+
     std::shared_ptr<ProcessTask> m_infrast_begin_task_ptr = nullptr;
     std::shared_ptr<ProcessTask> m_queue_rotation_task = nullptr;
     std::shared_ptr<InfrastInfoTask> m_info_task_ptr = nullptr;

@@ -1,5 +1,6 @@
 #include "InfrastTask.h"
 
+#include "Task/Infrast/InfrastPresetInitTask.h"
 #include "Utils/Logger.hpp"
 
 #include "Task/Infrast/DronesForShamareTaskPlugin.h"
@@ -69,6 +70,25 @@ bool asst::InfrastTask::set_params(const json::value& params)
 {
     LogTraceFunction;
 
+    if (m_running && m_preset_init) {
+        return false;
+    }
+    if (params.contains("preset_init") && !params.at("preset_init").is_boolean()) {
+        return false;
+    }
+    if (params.get("preset_init", false)) {
+        if (m_running || params.get("mode", 0) != static_cast<int>(Mode::Custom)) {
+            return false;
+        }
+        auto task = std::make_shared<InfrastPresetInitTask>(m_callback, m_inst, TaskType);
+        if (!task->set_params(params)) {
+            return false;
+        }
+        m_subtasks = { std::move(task) };
+        m_preset_init = true;
+        return true;
+    }
+
     auto mode = static_cast<Mode>(params.get("mode", 0));
     // 仅常规模式支持菲亚梅塔配对；关闭时不把前置宿舍步骤纳入子任务序列。
     const bool fiammetta_recovery_enabled = mode == Mode::Default && params.get("fiammetta_recovery_enabled", false);
@@ -121,6 +141,7 @@ bool asst::InfrastTask::set_params(const json::value& params)
         };
 
         m_subtasks.clear();
+        m_preset_init = false;
         append_infrast_begin();
 
         if (mode == Mode::Rotation) {
