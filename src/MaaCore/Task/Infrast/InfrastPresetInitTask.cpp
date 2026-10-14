@@ -121,9 +121,37 @@ asst::InfrastPresetInitTask::RoomOpenResult asst::InfrastPresetInitTask::open_ro
             OCRer labels(*image);
             labels.set_task_info("InfrastPresetOverviewRoom");
             labels.set_required({}); // Preserve room numbers when remembering rejected candidates.
-            const auto matches = labels.analyze();
+            auto matches = labels.analyze();
             if (!matches) {
                 break;
+            }
+            for (auto& label : *matches) {
+                if (!text_contains(label.text, facility_labels) || text_contains(label.text, expected)) {
+                    continue;
+                }
+                // An explicit different number is evidence, not a detector truncation to repair.
+                if (std::ranges::any_of(label.text, [](char ch) { return ch >= '0' && ch <= '9'; })) {
+                    continue;
+                }
+                const auto& detected = label.rect;
+                const Rect roi { detected.x - 4, detected.y - 4, 100, detected.height + 8 };
+                const auto& overview = Task.get("InfrastPresetOverviewRoom")->roi;
+                // Require the complete title region inside both the visible overview and the snapshot.
+                // Never clip an edge row and then mistake its remaining pixels for a complete identity.
+                if (detected.width <= 0 || detected.height <= 0 || detected.width > roi.width - 4 ||
+                    roi.x < overview.x || roi.y < overview.y || roi.x + roi.width > overview.x + overview.width ||
+                    roi.y + roi.height > overview.y + overview.height || roi.x < 0 || roi.y < 0 ||
+                    roi.x + roi.width > image->cols || roi.y + roi.height > image->rows) {
+                    continue;
+                }
+                RegionOCRer title(*image);
+                title.set_task_info("InfrastPresetOverviewLocalTitle");
+                title.set_roi(roi);
+                title.set_required(expected);
+                if (const auto confirmed = title.analyze()) {
+                    // Keep the detector rectangle: order bands and queue buttons are anchored to it.
+                    label.text = confirmed->text;
+                }
             }
             const bool has_exact = std::ranges::any_of(*matches, [&](const auto& label) {
                 return !rejected_titles.contains(label.text) && text_contains(label.text, expected);

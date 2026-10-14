@@ -6,6 +6,7 @@ Run from the repository root with a Debug MaaCore in build/bin/Debug:
 
 import ctypes
 import json
+import os
 import pathlib
 import sys
 import tempfile
@@ -78,6 +79,74 @@ class PresetImportTests(unittest.TestCase):
         self.assertEqual(selector["roi"], [20, 85, 250, 50])
         for key in ("fullMatch", "withoutDet", "useRaw", "binThreshold"):
             self.assertNotIn(key, selector)
+
+    def test_overview_local_title_configuration(self):
+        tasks = json.loads(
+            (ROOT / "resource/tasks/InfrastPresetImport.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        title = tasks["InfrastPresetOverviewLocalTitle"]
+        self.assertEqual(title["algorithm"], "OcrDetect")
+        self.assertEqual(title["text"], [])
+        for key in ("fullMatch", "withoutDet", "useRaw"):
+            self.assertTrue(title[key])
+        self.assertEqual(title["binThreshold"], [0, 255])
+        self.assertNotIn("baseTask", title)
+        self.assertNotIn("roi", title)
+
+    def test_local_overview_title_matrix(self):
+        # Opt-in local screenshots, not a CI fixture or a claim of CI image coverage.
+        # Set MAA_PRESET_OVERVIEW_MATRIX to the prior confirmation JSON; images sit beside it.
+        fixture = os.environ.get("MAA_PRESET_OVERVIEW_MATRIX")
+        if not fixture:
+            self.skipTest(
+                "Set MAA_PRESET_OVERVIEW_MATRIX for the local Core screenshot matrix"
+            )
+        path = pathlib.Path(fixture)
+        matrix = json.loads(path.read_text(encoding="utf-8"))
+        tasks = {}
+        cases = []
+        for index, row in enumerate(matrix["rows"]):
+            x, y, _width, height = row["detected"]["rect"]
+            roi = [x - 4, y - 4, 100, height + 8]
+            self.assertEqual(roi, row["roi"])
+            for target_index, target in enumerate(matrix["labels"]):
+                previous = next(
+                    result
+                    for result in row["results"]
+                    if result["task"].endswith(f"Id{target_index}")
+                )
+                name = f"PresetOverviewMatrix{index}Target{target_index}"
+                tasks[name] = {
+                    "baseTask": "InfrastPresetOverviewLocalTitle",
+                    "roi": roi,
+                    "text": [target],
+                }
+                cases.append((row, name, previous["hit"]))
+        self.assertTrue(cases)
+        with tempfile.TemporaryDirectory(prefix="maa-overview-matrix-") as directory:
+            overlay = pathlib.Path(directory)
+            task_dir = overlay / "resource/tasks"
+            task_dir.mkdir(parents=True)
+            (task_dir / "matrix.json").write_text(
+                json.dumps(tasks, ensure_ascii=False), encoding="utf-8"
+            )
+            self.assertTrue(
+                self.core._lib.AsstLoadResource(str(overlay).encode("utf-8"))
+            )
+            for image in sorted({row["image"] for row, _, _ in cases}):
+                image_cases = [case for case in cases if case[0]["image"] == image]
+                results = self.core.report(
+                    [path.parent / image], [name for _, name, _ in image_cases]
+                )[0]["results"]
+                for (_, name, expected), result in zip(
+                    image_cases, results, strict=True
+                ):
+                    with self.subTest(image=image, task=name):
+                        self.assertEqual(result["task"], name)
+                        self.assertEqual(result["hit"], expected)
+        print(f"Local Core overview matrix: {len(cases)} checks; not CI coverage")
 
     def test_preset_init_mode_gates(self):
         self.assertEqual(self.append(self.config(), mode=0), 0)

@@ -39,6 +39,14 @@
         "fullMatch": false,
         "roi": [430, 80, 110, 545]
     },
+    "InfrastPresetOverviewLocalTitle": {
+        "algorithm": "OcrDetect",
+        "text": [],
+        "fullMatch": true,
+        "withoutDet": true,
+        "useRaw": true,
+        "binThreshold": [0, 255]
+    },
     "InfrastPresetRoomControl": {
         "algorithm": "OcrDetect",
         "text": ["控制中枢"]
