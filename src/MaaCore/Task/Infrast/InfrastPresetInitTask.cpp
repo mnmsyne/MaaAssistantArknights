@@ -195,7 +195,7 @@ bool asst::InfrastPresetInitTask::match_product(
         { infrast::CustomRoomConfig::Product::BattleRecord, "作战记录" },
         { infrast::CustomRoomConfig::Product::PureGold, "贵金属" },
         { infrast::CustomRoomConfig::Product::Dualchip, "芯片" },
-        { infrast::CustomRoomConfig::Product::OriginiumShard, "源石碎片" },
+        { infrast::CustomRoomConfig::Product::OriginiumShard, "源石材料" },
     };
     const auto expected_iter = product_words.find(expected_product);
     if (expected_iter == product_words.cend()) {
