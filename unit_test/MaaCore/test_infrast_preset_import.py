@@ -59,6 +59,26 @@ class PresetImportTests(unittest.TestCase):
                 config = json.loads(path.read_text(encoding="utf-8-sig"))
                 self.assertGreater(self.append(config), 0)
 
+    def test_editor_title_configuration_is_strict_and_selector_is_independent(self):
+        tasks = json.loads(
+            (ROOT / "resource/tasks/InfrastPresetImport.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        editor = tasks["InfrastPresetEditorRoom"]
+        self.assertEqual(editor["roi"], [260, 45, 110, 45])
+        self.assertTrue(editor["fullMatch"])
+        self.assertTrue(editor["withoutDet"])
+        self.assertFalse(editor["useRaw"])
+        self.assertEqual(editor["binThreshold"], [200, 255])
+        selector = tasks["InfrastPresetSelectorRoom"]
+        self.assertNotIn("baseTask", selector)
+        self.assertEqual(selector["algorithm"], "OcrDetect")
+        self.assertEqual(selector["text"], [])
+        self.assertEqual(selector["roi"], [20, 85, 250, 50])
+        for key in ("fullMatch", "withoutDet", "useRaw", "binThreshold"):
+            self.assertNotIn(key, selector)
+
     def test_preset_init_mode_gates(self):
         self.assertEqual(self.append(self.config(), mode=0), 0)
         self.assertEqual(self.append(self.config(), mode=20000), 0)

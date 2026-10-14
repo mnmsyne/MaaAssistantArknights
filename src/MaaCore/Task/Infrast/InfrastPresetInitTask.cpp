@@ -61,17 +61,36 @@ std::vector<std::string> asst::InfrastPresetInitTask::room_labels(const infrast:
 
 bool asst::InfrastPresetInitTask::check_room(const infrast::PresetRoom& room, bool selector)
 {
+    if (!selector) {
+        const int room_count = room.facility == "Mfg" || room.facility == "Trade" ? 5
+                               : room.facility == "Power"                         ? 3
+                                                                                  : 1;
+        if (room.index < 0 || room.index >= room_count) {
+            LogError << "Invalid preset room identity" << room.facility << room.index;
+            return false;
+        }
+    }
     // The room title can be caught mid-fade right after a page switch ("制造站3" read as
     // "制造站g" at ~0.5 score on live runs); re-read a few times before failing.
     for (int attempt = 0; attempt < 3 && !need_exit(); ++attempt) {
-        OCRer ocr(ctrler()->get_image());
-        ocr.set_task_info(selector ? "InfrastPresetSelectorRoom" : "InfrastPresetEditorRoom");
-        // The small selector title misreads the room number too often ("制造站3" -> "制造站z");
-        // the editor context has already pinned the room, so the selector check matches the facility name only.
-        ocr.set_required(
-            selector ? Task.get<OcrTaskInfo>("InfrastPresetRoom" + room.facility)->text : room_labels(room));
-        if (ocr.analyze()) {
-            return true;
+        const auto image = ctrler()->get_image();
+        if (selector) {
+            // The editor has already pinned the room; preserve the selector's facility-only check.
+            OCRer ocr(image);
+            ocr.set_task_info("InfrastPresetSelectorRoom");
+            ocr.set_required(Task.get<OcrTaskInfo>("InfrastPresetRoom" + room.facility)->text);
+            if (ocr.analyze()) {
+                return true;
+            }
+        }
+        else {
+            // Recognize the complete title without detector cropping; never accept a partial identity.
+            RegionOCRer ocr(image);
+            ocr.set_task_info("InfrastPresetEditorRoom");
+            ocr.set_required(room_labels(room));
+            if (ocr.analyze()) {
+                return true;
+            }
         }
         if (attempt + 1 < 3) {
             sleep(500);

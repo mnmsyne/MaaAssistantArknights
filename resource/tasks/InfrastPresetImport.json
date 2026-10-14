@@ -76,10 +76,15 @@
     "InfrastPresetEditorRoom": {
         "algorithm": "OcrDetect",
         "text": [],
+        "fullMatch": true,
+        "withoutDet": true,
+        "useRaw": false,
+        "binThreshold": [200, 255],
         "roi": [260, 45, 110, 45]
     },
     "InfrastPresetSelectorRoom": {
-        "baseTask": "InfrastPresetEditorRoom",
+        "algorithm": "OcrDetect",
+        "text": [],
         "roi": [20, 85, 250, 50]
     },
     "InfrastPresetEditor": {
