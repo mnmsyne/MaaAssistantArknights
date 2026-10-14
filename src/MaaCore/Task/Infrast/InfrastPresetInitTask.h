@@ -43,6 +43,7 @@ private:
     std::optional<int> queue_count() const;
     bool open_slot(const infrast::PresetRoom& room, int slot);
     bool import_slot(const infrast::PresetRoom& room, int slot, const infrast::CustomRoomConfig& config);
+    bool prepare_slot_review();
     bool review_slot(const infrast::CustomRoomConfig& config);
     bool trim_queues(const infrast::PresetRoom& room);
     void report(

@@ -395,13 +395,20 @@ bool asst::InfrastPresetInitTask::open_slot(const infrast::PresetRoom& room, int
     return false;
 }
 
+bool asst::InfrastPresetInitTask::prepare_slot_review()
+{
+    // Fail closed if the role-based reset cannot be completed; never treat this as a roster mismatch.
+    close_quick_formation_expand_role();
+    return ProcessTask(*this, { "BattleQuickFormationExpandRole" }).set_retry_times(3).run() &&
+           ProcessTask(*this, { "BattleQuickFormationRole-Pioneer" }).run() &&
+           ProcessTask(*this, { "BattleQuickFormationRole-All", "BattleQuickFormationRole-All-OCR" }).run() &&
+           ProcessTask(*this, { "InfrastCloseQuickFormationExpandRole" }).run() && sleep(500) && !need_exit();
+}
+
 bool asst::InfrastPresetInitTask::review_slot(const infrast::CustomRoomConfig& config)
 {
     LogTraceFunction;
-    // Opening a saved queue places its selected operators first, in queue order.
-    close_quick_formation_expand_role();
-    swipe_to_the_left_of_operlist();
-    sleep(500);
+    // The caller prepares the page once; clearing selection does not move the list.
     InfrastOperImageAnalyzer analyzer(ctrler()->get_image());
     analyzer.set_to_be_calced(InfrastOperImageAnalyzer::ToBeCalced::Selected);
     if (!analyzer.analyze()) {
@@ -485,7 +492,7 @@ bool asst::InfrastPresetInitTask::import_slot(
     const infrast::CustomRoomConfig& config)
 {
     m_fail_reason.clear();
-    if (!open_slot(room, slot)) {
+    if (!open_slot(room, slot) || !prepare_slot_review()) {
         return false;
     }
     if (review_slot(config)) {
@@ -496,8 +503,6 @@ bool asst::InfrastPresetInitTask::import_slot(
     // The shared selector consumes its config; each slot receives a fresh copy.
     m_cur_facility_index = 0;
     set_custom_config({ config });
-    close_quick_formation_expand_role();
-    swipe_to_the_left_of_operlist();
     infrast::CustomRoomConfig empty_selection;
     if ((m_capacity > 1 && (!click_clear_button() || !review_slot(empty_selection))) ||
         !swipe_and_select_custom_opers() || need_exit() || !check_room(room, true)) {
@@ -512,7 +517,7 @@ bool asst::InfrastPresetInitTask::import_slot(
         return false;
     }
     // Read the saved queue back before reporting success.
-    if (!open_slot(room, slot)) {
+    if (!open_slot(room, slot) || !prepare_slot_review()) {
         return false;
     }
     const bool verified = review_slot(config);
