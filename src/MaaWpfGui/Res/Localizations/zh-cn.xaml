@@ -1348,6 +1348,25 @@ DEBUG 目录下保存的图片有数量限制，超出后会自动清理旧图�
     <system:String x:Key="Infrast.Preset.243Time4">243 一天 4 换</system:String>
     <system:String x:Key="Infrast.Preset.333Time3">333 一天 3 换</system:String>
     <system:String x:Key="Infrast.Preset.UserDefined">自定义</system:String>
+    <system:String x:Key="Infrast.PresetImport.CancelledSummary">{0} · 已保存并复核 {1}/{2} 条；未复核队列的状态可能已改变。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Completed">导入完成 · 已写入 {0} 条队列</system:String>
+    <system:String x:Key="Infrast.PresetImport.Failed">导入失败 · {0} · 已保存并复核 {1}/{2} 条；未复核队列的状态可能已改变。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Invalid">导入启动失败：请检查连接、JSON 格式及固定干员名单。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Location">当前位置：{0} {1} · 队列 {2}</system:String>
+    <system:String x:Key="Infrast.PresetImport.Queue">队列 {0}：{1}</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.navigation">页面导航或返回失败。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.product_mismatch">产物不匹配或识别失败</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.queue_count">无法识别房间内已保存的队列数量。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.queue_gap">目标队列之前存在尚未创建的空槽。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.room">无法定位目标房间或核对房间名称。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.selection_or_save">选人、保存或回读复核失败。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Room">预设导入 · {0} {1}</system:String>
+    <system:String x:Key="Infrast.PresetImport.Status.cancelled">导入已取消，已保存的队列会保留</system:String>
+    <system:String x:Key="Infrast.PresetImport.Tip" xml:space="preserve">将所选配置的前 3 个固定干员计划导入游戏预设队列；按序号覆盖、补建缺少的队列，并删除各房间末尾多余队列。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Title">导入预设队列</system:String>
+    <system:String x:Key="Infrast.PresetImport.Warning.dynamic_room">已跳过含备选干员、自动填充或干员编组的房间。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Warning.extra_plans">仅导入前 3 个计划，后续计划已忽略。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Warning.product_mismatch">无法确认 {0} {1} 的产物与配置一致，已停止导入。请核对配方、订单类型与设施顺序。</system:String>
     <system:String x:Key="Infrast.Reception.ClueExchange">进行线索交流</system:String>
     <system:String x:Key="Infrast.Reception.ClueExchange.Tip" xml:space="preserve">若无法开启线索交流，换班时会把线索板上的所有线索都取下来；若能开启，则会使用一键放置。&#10;个人线索上限为 10 张（含已放入会客室的线索），且已放入会客室的线索不计入重复判断。&#10;提前放入过多线索可能导致到达上限却无法一键赠送或获取新线索，只能靠好友捞起来。</system:String>
     <system:String x:Key="Infrast.Reception.MessageBoardReceive">会客室信息板收取信用</system:String>

@@ -1348,6 +1348,25 @@ DEBUG 디렉토리에 저장된 이미지는 수량 제한이 있으며 초과 �
     <system:String x:Key="Infrast.Preset.243Time4">243 1일 4회 교체</system:String>
     <system:String x:Key="Infrast.Preset.333Time3">333 1일 3회 교체</system:String>
     <system:String x:Key="Infrast.Preset.UserDefined">사용자 설정</system:String>
+    <system:String x:Key="Infrast.PresetImport.CancelledSummary">{0} · {1}/{2}개 저장 및 검증 완료. 검증하지 못한 대기열은 변경되었을 수 있습니다.</system:String>
+    <system:String x:Key="Infrast.PresetImport.Completed">가져오기 완료 · {0}개 대기열 작성됨</system:String>
+    <system:String x:Key="Infrast.PresetImport.Failed">가져오기 실패 · {0} · {1}/{2}개 저장 및 검증 완료. 검증하지 못한 대기열은 변경되었을 수 있습니다.</system:String>
+    <system:String x:Key="Infrast.PresetImport.Invalid">가져오기를 시작하지 못했습니다. 연결, JSON 형식 및 고정 오퍼레이터 목록을 확인하세요.</system:String>
+    <system:String x:Key="Infrast.PresetImport.Location">현재 위치: {0} {1} · 대기열 {2}</system:String>
+    <system:String x:Key="Infrast.PresetImport.Queue">대기열 {0}: {1}</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.navigation">화면 이동 또는 돌아가기에 실패했습니다.</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.product_mismatch">생산물 불일치 또는 인식 실패</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.queue_count">방에 저장된 대기열 수를 인식할 수 없습니다.</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.queue_gap">앞의 건너뛴 대기열이 아직 생성되지 않았습니다.</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.room">대상 방을 찾거나 확인하지 못했습니다.</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.selection_or_save">선택, 저장 또는 검증에 실패했습니다.</system:String>
+    <system:String x:Key="Infrast.PresetImport.Room">프리셋 가져오기 · {0} {1}</system:String>
+    <system:String x:Key="Infrast.PresetImport.Status.cancelled">가져오기 취소. 저장한 대기열은 유지됩니다</system:String>
+    <system:String x:Key="Infrast.PresetImport.Tip" xml:space="preserve">선택한 설정의 처음 3개 계획에 있는 고정 오퍼레이터 목록을 게임 내 프리셋으로 가져옵니다. 번호별로 덮어쓰고 부족한 대기열을 추가하며 각 방의 끝에 남는 대기열은 삭제합니다.</system:String>
+    <system:String x:Key="Infrast.PresetImport.Title">프리셋 가져오기</system:String>
+    <system:String x:Key="Infrast.PresetImport.Warning.dynamic_room">후보, 자동 채우기 또는 오퍼레이터 그룹을 사용하는 방은 건너뛰었습니다.</system:String>
+    <system:String x:Key="Infrast.PresetImport.Warning.extra_plans">처음 3개 계획만 가져옵니다. 이후 계획은 무시했습니다.</system:String>
+    <system:String x:Key="Infrast.PresetImport.Warning.product_mismatch">{0} {1}의 생산물이 설정과 일치하는지 확인하지 못해 가져오기를 중지했습니다. 제조법, 주문 유형, 시설 순서를 확인하세요.</system:String>
     <system:String x:Key="Infrast.Reception.ClueExchange">단서 공유 진행</system:String>
     <system:String x:Key="Infrast.Reception.ClueExchange.Tip" xml:space="preserve">단서 공유를 개방할 수 없는 경우 교대 시 단서 판의 모든 단서를 회수하며, 개방할 수 있는 경우 일괄 배치를 사용합니다.&#10;개인 단서 보유 한도는 10장(응접실에 배치된 단서 포함)이며, 배치된 단서는 중복 판정에 포함되지 않습니다.&#10;미리 지나치게 많이 배치하면 한도에 도달했는데도 일괄 전달도 새 단서 획득도 할 수 없습니다.</system:String>
     <system:String x:Key="Infrast.Reception.MessageBoardReceive">응접실 게시판에서 크레딧 수집</system:String>

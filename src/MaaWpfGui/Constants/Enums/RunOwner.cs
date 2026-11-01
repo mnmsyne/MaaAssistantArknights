@@ -48,4 +48,9 @@ public enum RunOwner
     /// 小工具页的识别工具（公招计算、仓库识别、干员识别、牛牛抽卡、查看截图）。
     /// </summary>
     Toolbox,
+
+    /// <summary>
+    /// 一次性导入基建预设队列。
+    /// </summary>
+    InfrastPresetImport,
 }

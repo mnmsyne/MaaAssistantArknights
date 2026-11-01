@@ -18,18 +18,24 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using MaaWpfGui.Configuration.Single.MaaTask;
 using MaaWpfGui.Constants;
 using MaaWpfGui.Constants.Enums;
 using MaaWpfGui.Helper;
+using MaaWpfGui.Main;
 using MaaWpfGui.Models;
 using MaaWpfGui.Models.AsstTasks;
+using MaaWpfGui.Services;
+using MaaWpfGui.States;
 using MaaWpfGui.Utilities;
 using MaaWpfGui.Utilities.ValueType;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Serilog;
+using Stylet;
 using static MaaWpfGui.Main.AsstProxy;
 using Mode = MaaWpfGui.ViewModels.UserControl.TaskQueue.InfrastMode;
 
@@ -56,6 +62,95 @@ public class InfrastTaskUserControlModel : TaskSettingsViewModel, InfrastTaskUse
                     SaveWeeklySchedule();
                 }
             };
+        }
+
+        _runningState.StateChanged += (_, _) => Execute.OnUIThread(() => {
+            NotifyOfPropertyChange(nameof(CanImportPresets));
+        });
+    }
+
+    private readonly RunningState _runningState = RunningState.Instance;
+
+    private bool _presetImportStarting;
+
+    [PropertyDependsOn(nameof(CustomInfrastFile))]
+    public bool CanImportPresets => !_presetImportStarting && _runningState.Inited && !_runningState.Stopping && _runningState.CanInterrupt() && File.Exists(CustomInfrastFile);
+
+    public async Task ImportPresets()
+    {
+        if (!CanImportPresets)
+        {
+            return;
+        }
+
+        if (Bootstrapper.TryGetTaskBlockReason() is { } reason)
+        {
+            Instances.TaskQueueViewModel.AddLog(reason, UiLogColor.Error);
+            return;
+        }
+
+        var filename = CustomInfrastFile;
+        _presetImportStarting = true;
+        _runningState.BeginRun(RunOwner.InfrastPresetImport);
+        var started = false;
+        try
+        {
+            string error = string.Empty;
+            Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("Connection.Connecting"));
+            var connected = await Task.Run(() => Instances.AsstProxy.AsstConnect(ref error));
+            if (_runningState.Stopping || _runningState.Owner != RunOwner.InfrastPresetImport)
+            {
+                return;
+            }
+
+            if (!connected)
+            {
+                Instances.TaskQueueViewModel.AddLog(error, UiLogColor.Error);
+                return;
+            }
+
+            if (!Instances.AsstProxy.AsstStop())
+            {
+                _logger.Warning("Failed to clear tasks before infrastructure preset import");
+                Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("Infrast.PresetImport.Invalid"), UiLogColor.Error);
+                return;
+            }
+            var parameters = new JObject {
+                ["mode"] = (int)InfrastMode.Custom,
+                ["preset_init"] = true,
+                ["filename"] = filename,
+            };
+            if (!Instances.AsstProxy.AsstAppendTaskWithEncoding(TaskType.Infrast, AsstTaskType.Infrast, parameters) || !Instances.AsstProxy.AsstStart())
+            {
+                Instances.AsstProxy.AsstStop();
+                Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("Infrast.PresetImport.Invalid"), UiLogColor.Error);
+                return;
+            }
+
+            started = true;
+        }
+        catch (Exception ex)
+        {
+            _logger.Error(ex, "Failed to start infrastructure preset import");
+            Instances.AsstProxy.AsstStop();
+            Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("Infrast.PresetImport.Invalid"), UiLogColor.Error);
+        }
+        finally
+        {
+            _presetImportStarting = false;
+            if (!started && _runningState.Owner == RunOwner.InfrastPresetImport)
+            {
+                if (_runningState.Stopping)
+                {
+                    Instances.TaskQueueViewModel.SetStopped();
+                }
+                else
+                {
+                    _runningState.SetIdle(true);
+                }
+            }
+
+            NotifyOfPropertyChange(nameof(CanImportPresets));
         }
     }
 
@@ -459,12 +554,13 @@ public class InfrastTaskUserControlModel : TaskSettingsViewModel, InfrastTaskUse
             Filter = LocalizationHelper.GetString("Infrast.Custom.File") + "|*.json",
         };
 
-        if (dialog.ShowDialog() == true)
+        if (dialog.ShowDialog() != true)
         {
-            CustomInfrastFile = dialog.FileName;
+            return;
         }
 
         DefaultInfrast = UserDefined;
+        CustomInfrastFile = dialog.FileName;
         if (CustomInfrastPlanList.Count > 0)
         {
             AchievementTrackerHelper.Instance.Unlock(AchievementIds.PrivateDormManager);
@@ -477,6 +573,10 @@ public class InfrastTaskUserControlModel : TaskSettingsViewModel, InfrastTaskUse
         set {
             SetTaskConfig<InfrastTask>(t => t.Filename == value, t => t.Filename = value);
             ParseCustomInfrastPlan(true);
+            if (InfrastMode == Mode.Rotation)
+            {
+                return;
+            }
 
             int index = CustomInfrastPlanList.Any(i => i.Period.Count > 0) ? -1 : 0;
             if (index != CustomInfrastPlanSelect)
@@ -530,7 +630,7 @@ public class InfrastTaskUserControlModel : TaskSettingsViewModel, InfrastTaskUse
 
     public void ParseCustomInfrastPlan(bool output = false)
     {
-        if (InfrastMode != Mode.Custom || !File.Exists(CustomInfrastFile))
+        if (InfrastMode is not (Mode.Custom or Mode.Rotation) || !File.Exists(CustomInfrastFile))
         {
             CustomInfrastPlanList = [];
             return;
@@ -539,7 +639,20 @@ public class InfrastTaskUserControlModel : TaskSettingsViewModel, InfrastTaskUse
         try
         {
             string jsonStr = File.ReadAllText(CustomInfrastFile);
-            if (JsonConvert.DeserializeObject<CustomInfrastConfig>(jsonStr) is not CustomInfrastConfig root)
+            CustomInfrastConfig? root;
+            if (InfrastMode == Mode.Rotation)
+            {
+                var metadata = JObject.Parse(jsonStr);
+                root = new CustomInfrastConfig {
+                    Title = metadata.Value<string>("title"),
+                    Description = metadata.Value<string>("description"),
+                };
+            }
+            else
+            {
+                root = JsonConvert.DeserializeObject<CustomInfrastConfig>(jsonStr);
+            }
+            if (root is null)
             {
                 throw new JsonException("DeserializeObject returned null");
             }
@@ -549,6 +662,16 @@ public class InfrastTaskUserControlModel : TaskSettingsViewModel, InfrastTaskUse
                 Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("Infrast.Custom.Title"), UiLogColor.Message, splitMode: UI.TaskQueueViewModel.LogCardSplitMode.Before);
                 Instances.TaskQueueViewModel.AddLog($"title: {root.Title}", UiLogColor.Info);
                 Instances.TaskQueueViewModel.AddLog($"description: {root.Description}", UiLogColor.Info);
+            }
+
+            if (InfrastMode == Mode.Rotation)
+            {
+                CustomInfrastPlanList = [];
+                if (output)
+                {
+                    Instances.TaskQueueViewModel.AddLog(string.Empty, splitMode: UI.TaskQueueViewModel.LogCardSplitMode.After);
+                }
+                return;
             }
 
             var planList = root.Plans;
@@ -599,6 +722,10 @@ public class InfrastTaskUserControlModel : TaskSettingsViewModel, InfrastTaskUse
     private void RefreshCustomInfrastPlanList()
     {
         _customInfrastPlanListDisplay.Clear();
+        if (InfrastMode == Mode.Rotation)
+        {
+            return;
+        }
         if (CustomInfrastPlanList.Any(i => i.Period.Count > 0))
         {
             var now = TimeOnly.FromDateTime(DateTime.Now.ToLocalTime());

@@ -102,6 +102,13 @@
                     Margin="0,5"
                     IsReadOnly="{Binding IsCustomInfrastFileReadOnly}"
                     Text="{Binding CustomInfrastFile}" />
+                <WrapPanel Margin="0,5">
+                    <Button
+                        Command="{s:Action ImportPresets}"
+                        Content="{DynamicResource Infrast.PresetImport.Title}"
+                        IsEnabled="{Binding CanImportPresets}" />
+                    <controls:TooltipBlock Margin="5,0" TooltipText="{DynamicResource Infrast.PresetImport.Tip}" />
+                </WrapPanel>
             </StackPanel>
             <ComboBox
                 Margin="0,5"
@@ -113,6 +120,34 @@
                 ItemsSource="{Binding UsesOfDronesList}"
                 SelectedValue="{Binding UsesOfDrones}"
                 SelectedValuePath="Value" />
+            <StackPanel Visibility="{c:Binding 'InfrastMode == taskQueue_vms:InfrastMode.Rotation', Source={x:Static taskQueue_vms:InfrastTaskUserControlModel.Instance}}">
+                <Grid Margin="0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                        hc:BorderElement.CornerRadius="4,0,0,4"
+                        hc:InfoElement.Title="{DynamicResource Infrast.Custom.File}"
+                        IsReadOnly="True"
+                        Text="{Binding CustomInfrastFile}" />
+                    <Button
+                        Grid.Column="1"
+                        Margin="-1,0,0,0"
+                        VerticalAlignment="Bottom"
+                        hc:BorderElement.CornerRadius="0,4,4,0"
+                        BorderThickness="0,1,1,1"
+                        Command="{s:Action SelectCustomInfrastFile}"
+                        Content="{DynamicResource Common.Select}" />
+                </Grid>
+                <WrapPanel Margin="0,5">
+                    <Button
+                        Command="{s:Action ImportPresets}"
+                        Content="{DynamicResource Infrast.PresetImport.Title}"
+                        IsEnabled="{Binding CanImportPresets}" />
+                    <controls:TooltipBlock Margin="5,0" TooltipText="{DynamicResource Infrast.PresetImport.Tip}" />
+                </WrapPanel>
+            </StackPanel>
             <controls:TextBlock
                 Width="220"
                 Margin="0,4"
@@ -221,6 +256,7 @@
                         Content="{DynamicResource Common.Clear}" />
                 </Grid>
             </StackPanel>
+
         </StackPanel>
 
         <!--  高级设置  -->

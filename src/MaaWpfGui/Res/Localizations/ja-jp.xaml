@@ -1350,6 +1350,25 @@ DEBUGディレクトリに保存される画像には数量制限があり、超
     <system:String x:Key="Infrast.Preset.243Time4">243 4周/日</system:String>
     <system:String x:Key="Infrast.Preset.333Time3">333 3周/日</system:String>
     <system:String x:Key="Infrast.Preset.UserDefined">ユーザー定義</system:String>
+    <system:String x:Key="Infrast.PresetImport.CancelledSummary">{0} · {1}/{2} 件を保存・検証済み。未検証の隊列は変更された可能性があります。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Completed">インポート完了 · {0} 件のキューを書き込み</system:String>
+    <system:String x:Key="Infrast.PresetImport.Failed">インポート失敗 · {0} · {1}/{2} 件を保存・検証済み。未検証の隊列は変更された可能性があります。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Invalid">インポートを開始できません。接続、JSON 形式、固定オペレーター一覧を確認してください。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Location">現在位置：{0} {1} · 隊列 {2}</system:String>
+    <system:String x:Key="Infrast.PresetImport.Queue">隊列 {0}：{1}</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.navigation">画面移動または戻る操作に失敗しました。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.product_mismatch">生産物の不一致または認識失敗</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.queue_count">部屋に保存済みのキュー数を認識できませんでした。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.queue_gap">前のスキップした隊列が未作成です。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.room">対象部屋の検出または確認に失敗しました。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Reason.selection_or_save">選択、保存、再確認に失敗しました。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Room">プリセット · {0} {1}</system:String>
+    <system:String x:Key="Infrast.PresetImport.Status.cancelled">インポート中止。保存済みの隊列は残ります</system:String>
+    <system:String x:Key="Infrast.PresetImport.Tip" xml:space="preserve">選択した設定の最初の 3 プランから固定オペレーター編成をゲーム内プリセットに取り込み、番号ごとに上書き・不足分の追加・各部屋の末尾の余分な隊列の削除を行います。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Title">プリセットをインポート</system:String>
+    <system:String x:Key="Infrast.PresetImport.Warning.dynamic_room">候補、自動補充、オペレーターグループを使用する部屋はスキップしました。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Warning.extra_plans">最初の 3 プランのみインポートします。以降のプランは無視しました。</system:String>
+    <system:String x:Key="Infrast.PresetImport.Warning.product_mismatch">{0} {1} の生産物が設定と一致することを確認できないため、インポートを停止しました。レシピ、受注タイプ、施設の順序を確認してください。</system:String>
     <system:String x:Key="Infrast.Reception.ClueExchange">手がかり交換を実施</system:String>
     <system:String x:Key="Infrast.Reception.ClueExchange.Tip" xml:space="preserve">手がかり交換を開始できない場合、シフト交代時に手がかりボード上のすべての手がかりを取り下げます。開始できる場合は一括配置を使用します。&#10;個人の手がかり所持上限は10枚（応接室に配置済みのものを含む）で、配置済みの手がかりは重複判定に含まれません。&#10;事前に多くを配置しすぎると、上限に達したのに一括送信も新しい手がかりの獲得もできなくなります。</system:String>
     <system:String x:Key="Infrast.Reception.MessageBoardReceive">受付室の掲示板からのクレジット収集</system:String>
