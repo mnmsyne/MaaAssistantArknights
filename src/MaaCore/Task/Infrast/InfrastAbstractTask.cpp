@@ -389,14 +389,24 @@ bool asst::InfrastAbstractTask::is_facility_config_empty() const
     return m_is_custom && m_custom_config.empty();
 }
 
-/// @brief 按技能排序->清空干员->选择定制干员->按指定顺序排序
-/// @param is_dorm_order 当前房间是不是宿舍
 bool asst::InfrastAbstractTask::swipe_and_select_custom_opers(
     bool is_dorm_order,
     bool is_assistant_select,
     bool* room_kept_unchanged)
 {
+    return swipe_and_select_custom_opers_impl(
+        { .is_dorm_order = is_dorm_order, .is_assistant_select = is_assistant_select },
+        room_kept_unchanged);
+}
+
+bool asst::InfrastAbstractTask::swipe_and_select_custom_opers_impl(
+    const CustomOperSelectionOptions& options,
+    bool* room_kept_unchanged)
+{
     LogTraceFunction;
+
+    const bool is_dorm_order = options.is_dorm_order;
+    const bool is_assistant_select = options.is_assistant_select;
 
     // 点名名单里的干员可能正在其他设施工作，先把筛选恢复为“全部”再扫描，
     // 避免上一流程留下的“未进驻”筛选把点名干员藏掉导致选不中
@@ -408,7 +418,7 @@ bool asst::InfrastAbstractTask::swipe_and_select_custom_opers(
 
     auto& room_config = current_room_config();
     auto origin_room_config = room_config;
-    if (!is_assistant_select) {
+    if (!is_assistant_select && options.notify_room_operators) {
         json::value cb_info = basic_info_with_what("CustomInfrastRoomOperators");
         auto& details = cb_info["details"];
         details["names"] = json::array(room_config.names);
@@ -423,7 +433,7 @@ bool asst::InfrastAbstractTask::swipe_and_select_custom_opers(
         ProcessTask(*this, { "InfrastOperListTabMoodDoubleClickWhenUnclicked" }).run();
     }
 
-    if (max_num_of_opers() > 1) {
+    if (max_num_of_opers() > 1 && !options.selection_already_cleared) {
         click_clear_button(); // 先排序后清空，加速干员变化不大时的选择速度
     }
 
@@ -486,7 +496,12 @@ bool asst::InfrastAbstractTask::swipe_and_select_custom_opers(
     // 先按任意其他的tab排序，游戏会自动把已经选中的人放到最前面
     // 因为后面autofill要按工作状态排序，所以直接按工作状态排序好了
     // 然后滑动到最左边，清空一下，在走后面的识别+按序点击逻辑
-    if (is_dorm_order) {
+    if (options.prepare_selected_opers) {
+        if (!options.prepare_selected_opers()) {
+            return false;
+        }
+    }
+    else if (is_dorm_order) {
         ProcessTask(*this, { "InfrastOperListTabMoodDoubleClick" }).run();
         sleep(200);
     }

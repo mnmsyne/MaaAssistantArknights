@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include <set>
 
 #include "Common/AsstInfrastDef.h"
@@ -124,6 +125,21 @@ protected:
     bool swipe_and_select_custom_opers(
         bool is_dorm_order = false,
         bool is_assistant_select = false,
+        bool* room_kept_unchanged = nullptr);
+
+    struct CustomOperSelectionOptions
+    {
+        bool is_dorm_order = false;
+        bool is_assistant_select = false;
+        // 仅供已清空且严格复核为空的预设队列调用，避免再次清空引入未复核的界面变化。
+        bool selection_already_cleared = false;
+        bool notify_room_operators = true;
+        // Optional page preparation to bring selected operators together before ordering and review.
+        std::function<bool()> prepare_selected_opers;
+    };
+
+    bool swipe_and_select_custom_opers_impl(
+        const CustomOperSelectionOptions& options,
         bool* room_kept_unchanged = nullptr);
     bool select_custom_opers(std::vector<std::string>& partial_result, bool is_dorm_order = false);
     /// 阶段二选人：ALL 列表前几页未收尾的剩余目标按职业分桶定位。必选层桶内找齐即切下一桶，
